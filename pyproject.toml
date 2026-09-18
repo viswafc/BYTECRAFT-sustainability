@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aquarisk-ai"
+version = "0.1.0"
+description = "AquaRisk AI - Predictive Water Loss Timeline & Counterfactual Simulation Engine (Phase 1 foundation)"
+requires-python = ">=3.11"
+dependencies = [
+  "pandas>=2.2",
+  "numpy>=1.26",
+  "scikit-learn>=1.5",
+  "imbalanced-learn>=0.12",
+  "joblib>=1.4",
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "pydantic>=2.7",
+  "pydantic-settings>=2.3",
+  "sqlalchemy>=2.0",
+  "alembic>=1.13",
+  "psycopg[binary]>=3.1",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[tool.setuptools]
+packages = ["ml", "backend", "backend.app", "backend.app.api", "backend.app.services",
+            "backend.app.models", "backend.app.schemas", "backend.app.utils"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "backend/tests"]
+addopts = "-q"

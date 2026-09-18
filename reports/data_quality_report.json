@@ -1,0 +1,260 @@
+{
+  "generated_at": "2026-09-18T07:53:40.590332+00:00",
+  "dataset": "data/raw/location_aware_gis_leakage_dataset.csv",
+  "sha256": "9d7758a4b58969da448137cfd91a5abea1eac15ec9835c2abf0067f7fa0ee501",
+  "shape": {
+    "rows": 5000,
+    "columns": 13
+  },
+  "dtypes": {
+    "Pressure": "float64",
+    "Flow_Rate": "float64",
+    "Temperature": "float64",
+    "Vibration": "float64",
+    "RPM": "float64",
+    "Operational_Hours": "int64",
+    "Zone": "str",
+    "Block": "str",
+    "Pipe": "str",
+    "Location_Code": "str",
+    "Latitude": "float64",
+    "Longitude": "float64",
+    "Leakage_Flag": "int64"
+  },
+  "missing_values": {
+    "Pressure": 0,
+    "Flow_Rate": 0,
+    "Temperature": 0,
+    "Vibration": 0,
+    "RPM": 0,
+    "Operational_Hours": 0,
+    "Zone": 0,
+    "Block": 0,
+    "Pipe": 0,
+    "Location_Code": 0,
+    "Latitude": 0,
+    "Longitude": 0,
+    "Leakage_Flag": 0
+  },
+  "duplicate_rows": 0,
+  "duplicate_feature_rows_ignoring_label": 0,
+  "class_balance": {
+    "counts": {
+      "0": 4677,
+      "1": 323
+    },
+    "positive_rate": 0.0646
+  },
+  "numeric_summary": {
+    "Pressure": {
+      "min": 27.58732659930927,
+      "max": 99.26237706436326,
+      "mean": 60.05601930087572,
+      "std": 9.964798288209385,
+      "median": 60.134655918954266,
+      "negatives": 0,
+      "iqr_outliers": 42
+    },
+    "Flow_Rate": {
+      "min": 21.163996225724865,
+      "max": 132.93582781355727,
+      "mean": 79.85189154763361,
+      "std": 15.156556269447474,
+      "median": 79.73824211380864,
+      "negatives": 0,
+      "iqr_outliers": 34
+    },
+    "Temperature": {
+      "min": 83.122104499112,
+      "max": 117.14455239004108,
+      "mean": 100.05276500803315,
+      "std": 4.993849237127674,
+      "median": 100.04958723034244,
+      "negatives": 0,
+      "iqr_outliers": 47
+    },
+    "Vibration": {
+      "min": 1.0718123353797016,
+      "max": 5.239542125512879,
+      "mean": 3.008257552261572,
+      "std": 0.5016683433405643,
+      "median": 3.0096295690955843,
+      "negatives": 0,
+      "iqr_outliers": 36
+    },
+    "RPM": {
+      "min": 903.4740454687684,
+      "max": 3083.405018844701,
+      "mean": 1994.4943138942585,
+      "std": 295.0123926768213,
+      "median": 1997.5949522246672,
+      "negatives": 0,
+      "iqr_outliers": 23
+    },
+    "Operational_Hours": {
+      "min": 1000.0,
+      "max": 9998.0,
+      "mean": 5488.2478,
+      "std": 2611.4262932451625,
+      "median": 5489.0,
+      "negatives": 0,
+      "iqr_outliers": 0
+    },
+    "Latitude": {
+      "min": 25.081388808371816,
+      "max": 25.291945353486263,
+      "mean": 25.183972105912375,
+      "std": 0.05997632939347759,
+      "median": 25.193183650125114,
+      "negatives": 0,
+      "iqr_outliers": 0
+    },
+    "Longitude": {
+      "min": 55.14601515815271,
+      "max": 55.31281728311812,
+      "mean": 55.248892401063095,
+      "std": 0.04770224094097779,
+      "median": 55.270520772329526,
+      "negatives": 0,
+      "iqr_outliers": 0
+    }
+  },
+  "categorical_distributions": {
+    "Zone": {
+      "Zone_1": 1005,
+      "Zone_2": 984,
+      "Zone_3": 965,
+      "Zone_4": 1026,
+      "Zone_5": 1020
+    },
+    "Block": {
+      "Block_1": 990,
+      "Block_2": 1007,
+      "Block_3": 1017,
+      "Block_4": 950,
+      "Block_5": 1036
+    },
+    "Pipe": {
+      "Pipe_1": 1025,
+      "Pipe_2": 967,
+      "Pipe_3": 993,
+      "Pipe_4": 1002,
+      "Pipe_5": 1013
+    }
+  },
+  "location_code": {
+    "n_unique": 125,
+    "consistent_with_zone_block_pipe": true
+  },
+  "unique_lat_lon_pairs": 5000,
+  "leak_rate_by": {
+    "Zone": {
+      "Zone_1": 0.0667,
+      "Zone_2": 0.0569,
+      "Zone_3": 0.0653,
+      "Zone_4": 0.0712,
+      "Zone_5": 0.0627
+    },
+    "Block": {
+      "Block_1": 0.0778,
+      "Block_2": 0.0556,
+      "Block_3": 0.0551,
+      "Block_4": 0.0632,
+      "Block_5": 0.0714
+    },
+    "Pipe": {
+      "Pipe_1": 0.0751,
+      "Pipe_2": 0.0662,
+      "Pipe_3": 0.0624,
+      "Pipe_4": 0.0589,
+      "Pipe_5": 0.0602
+    }
+  },
+  "leak_rate_by_location_code": {
+    "min": 0.0,
+    "max": 0.20454545454545456,
+    "std": 0.038045971791124594
+  },
+  "lat_lon_by_zone": {
+    "Zone_1": {
+      "lat_mean": 25.204713083281263,
+      "lat_std": 0.004968618900534305,
+      "lon_mean": 55.2705150340427,
+      "lon_std": 0.004940184083564492
+    },
+    "Zone_2": {
+      "lat_mean": 25.27688343152121,
+      "lat_std": 0.005094126020686813,
+      "lon_mean": 55.296284938851194,
+      "lon_std": 0.00493012756581951
+    },
+    "Zone_3": {
+      "lat_mean": 25.095620573101296,
+      "lat_std": 0.005036190497845283,
+      "lon_mean": 55.163761390564986,
+      "lon_std": 0.004850651144828881
+    },
+    "Zone_4": {
+      "lat_mean": 25.148319576052515,
+      "lat_std": 0.005194404109581464,
+      "lon_mean": 55.22877077563406,
+      "lon_std": 0.0050048137458508935
+    },
+    "Zone_5": {
+      "lat_mean": 25.193353770759515,
+      "lat_std": 0.005085867050222788,
+      "lon_mean": 55.28264848880115,
+      "lon_std": 0.005166142511318996
+    }
+  },
+  "pearson_corr_with_target": {
+    "Pressure": -0.3265,
+    "Flow_Rate": 0.3291,
+    "Temperature": -0.0194,
+    "Vibration": -0.0032,
+    "RPM": -0.0046,
+    "Operational_Hours": 0.0135,
+    "Latitude": -0.0127,
+    "Longitude": -0.0113
+  },
+  "leak_vs_normal_means": {
+    "Pressure": {
+      "leak": 47.67638130563089,
+      "normal": 60.910973988167605
+    },
+    "Flow_Rate": {
+      "leak": 98.82991412857656,
+      "normal": 78.54124341984988
+    },
+    "Temperature": {
+      "leak": 99.68398137117495,
+      "normal": 100.07823370906056
+    },
+    "Vibration": {
+      "leak": 3.0021196898405362,
+      "normal": 3.008681441413164
+    },
+    "RPM": {
+      "leak": 1989.3658372571197,
+      "normal": 1994.8484934866885
+    },
+    "Operational_Hours": {
+      "leak": 5621.990712074304,
+      "normal": 5479.01133205046
+    }
+  },
+  "label_separability": {
+    "leak_pressure_range": [
+      29.804878441791747,
+      53.41883510924743
+    ],
+    "leak_flow_rate_range": [
+      90.24818606001604,
+      124.8921585509096
+    ],
+    "rows_inside_box_pressure_le_max_and_flow_ge_min": 323,
+    "leaks_inside_box": 323,
+    "total_leaks": 323,
+    "box_is_perfect_separator": true
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "model_name": "logistic_regression",
+  "version": "0.1.0",
+  "feature_config": "A_all_features",
+  "training_dataset": "data/raw/location_aware_gis_leakage_dataset.csv",
+  "training_dataset_sha256": "9d7758a4b58969da448137cfd91a5abea1eac15ec9835c2abf0067f7fa0ee501",
+  "features": [
+    "Pressure",
+    "Flow_Rate",
+    "Temperature",
+    "Vibration",
+    "RPM",
+    "Operational_Hours",
+    "Latitude",
+    "Longitude",
+    "Zone",
+    "Block",
+    "Pipe",
+    "Location_Code"
+  ],
+  "target": "Leakage_Flag",
+  "training_timestamp": "2026-09-18T07:53:33.601601+00:00",
+  "n_train_rows": 4000,
+  "n_test_rows": 1000,
+  "evaluation_metrics": {
+    "accuracy": 0.89,
+    "precision": 0.37142857142857144,
+    "recall": 1.0,
+    "f1": 0.5416666666666666,
+    "confusion_matrix": {
+      "tn": 825,
+      "fp": 110,
+      "fn": 0,
+      "tp": 65
+    },
+    "support": {
+      "negative": 935,
+      "positive": 65
+    },
+    "roc_auc": 0.973048128342246,
+    "pr_auc": 0.6461143357627528
+  },
+  "sklearn_version": "1.9.1",
+  "artifact_file": "A_all_features/logistic_regression.joblib"
+}

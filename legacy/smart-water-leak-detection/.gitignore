@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+.venv/
+env/
+venv/
+
+# Environment variables
+.env
+
+# Streamlit cache
+.streamlit/
+
+# Model files (When you run ipynb file you get the .pkl file that you can use !!)
+*.pkl
+
+# VSCode / IDE
+.vscode/
+.idea/

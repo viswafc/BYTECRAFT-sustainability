@@ -1,0 +1,39 @@
+{
+  "model_name": "random_forest",
+  "version": "0.1.0",
+  "feature_config": "B_sensor_only",
+  "training_dataset": "data/raw/location_aware_gis_leakage_dataset.csv",
+  "training_dataset_sha256": "9d7758a4b58969da448137cfd91a5abea1eac15ec9835c2abf0067f7fa0ee501",
+  "features": [
+    "Pressure",
+    "Flow_Rate",
+    "Temperature",
+    "Vibration",
+    "RPM",
+    "Operational_Hours"
+  ],
+  "target": "Leakage_Flag",
+  "training_timestamp": "2026-09-18T07:53:38.108650+00:00",
+  "n_train_rows": 4000,
+  "n_test_rows": 1000,
+  "evaluation_metrics": {
+    "accuracy": 0.999,
+    "precision": 1.0,
+    "recall": 0.9846153846153847,
+    "f1": 0.9922480620155039,
+    "confusion_matrix": {
+      "tn": 935,
+      "fp": 0,
+      "fn": 1,
+      "tp": 64
+    },
+    "support": {
+      "negative": 935,
+      "positive": 65
+    },
+    "roc_auc": 1.0,
+    "pr_auc": 0.9999999999999999
+  },
+  "sklearn_version": "1.9.1",
+  "artifact_file": "B_sensor_only/random_forest.joblib"
+}

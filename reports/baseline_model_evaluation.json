@@ -1,0 +1,298 @@
+{
+  "generated_at": "2026-09-18T07:53:39.411569+00:00",
+  "protocol": {
+    "split": "80/20 stratified, random_state=42 (identical to legacy notebook)",
+    "resampling": "SMOTE(random_state=42) applied inside the pipeline on the training fold only",
+    "sklearn_version": "1.9.1"
+  },
+  "configurations": {
+    "A_all_features": {
+      "numeric": [
+        "Pressure",
+        "Flow_Rate",
+        "Temperature",
+        "Vibration",
+        "RPM",
+        "Operational_Hours",
+        "Latitude",
+        "Longitude"
+      ],
+      "categorical": [
+        "Zone",
+        "Block",
+        "Pipe",
+        "Location_Code"
+      ]
+    },
+    "B_sensor_only": {
+      "numeric": [
+        "Pressure",
+        "Flow_Rate",
+        "Temperature",
+        "Vibration",
+        "RPM",
+        "Operational_Hours"
+      ],
+      "categorical": []
+    }
+  },
+  "results": [
+    {
+      "feature_config": "A_all_features",
+      "model_name": "random_forest",
+      "n_train_rows": 4000,
+      "n_test_rows": 1000,
+      "metrics": {
+        "accuracy": 0.989,
+        "precision": 1.0,
+        "recall": 0.8307692307692308,
+        "f1": 0.907563025210084,
+        "confusion_matrix": {
+          "tn": 935,
+          "fp": 0,
+          "fn": 11,
+          "tp": 54
+        },
+        "support": {
+          "negative": 935,
+          "positive": 65
+        },
+        "roc_auc": 1.0,
+        "pr_auc": 0.9999999999999998
+      }
+    },
+    {
+      "feature_config": "A_all_features",
+      "model_name": "decision_tree",
+      "n_train_rows": 4000,
+      "n_test_rows": 1000,
+      "metrics": {
+        "accuracy": 0.91,
+        "precision": 0.037037037037037035,
+        "recall": 0.015384615384615385,
+        "f1": 0.021739130434782608,
+        "confusion_matrix": {
+          "tn": 909,
+          "fp": 26,
+          "fn": 64,
+          "tp": 1
+        },
+        "support": {
+          "negative": 935,
+          "positive": 65
+        },
+        "roc_auc": 0.4939284245166598,
+        "pr_auc": 0.06553846153846155
+      }
+    },
+    {
+      "feature_config": "A_all_features",
+      "model_name": "logistic_regression",
+      "n_train_rows": 4000,
+      "n_test_rows": 1000,
+      "metrics": {
+        "accuracy": 0.89,
+        "precision": 0.37142857142857144,
+        "recall": 1.0,
+        "f1": 0.5416666666666666,
+        "confusion_matrix": {
+          "tn": 825,
+          "fp": 110,
+          "fn": 0,
+          "tp": 65
+        },
+        "support": {
+          "negative": 935,
+          "positive": 65
+        },
+        "roc_auc": 0.973048128342246,
+        "pr_auc": 0.6461143357627528
+      }
+    },
+    {
+      "feature_config": "A_all_features",
+      "model_name": "svm",
+      "n_train_rows": 4000,
+      "n_test_rows": 1000,
+      "metrics": {
+        "accuracy": 0.907,
+        "precision": 0.41025641025641024,
+        "recall": 0.9846153846153847,
+        "f1": 0.579185520361991,
+        "confusion_matrix": {
+          "tn": 843,
+          "fp": 92,
+          "fn": 1,
+          "tp": 64
+        },
+        "support": {
+          "negative": 935,
+          "positive": 65
+        },
+        "roc_auc": 0.9719127930892637,
+        "pr_auc": 0.6443863789106559
+      }
+    },
+    {
+      "feature_config": "B_sensor_only",
+      "model_name": "random_forest",
+      "n_train_rows": 4000,
+      "n_test_rows": 1000,
+      "metrics": {
+        "accuracy": 0.999,
+        "precision": 1.0,
+        "recall": 0.9846153846153847,
+        "f1": 0.9922480620155039,
+        "confusion_matrix": {
+          "tn": 935,
+          "fp": 0,
+          "fn": 1,
+          "tp": 64
+        },
+        "support": {
+          "negative": 935,
+          "positive": 65
+        },
+        "roc_auc": 1.0,
+        "pr_auc": 0.9999999999999999
+      }
+    },
+    {
+      "feature_config": "B_sensor_only",
+      "model_name": "decision_tree",
+      "n_train_rows": 4000,
+      "n_test_rows": 1000,
+      "metrics": {
+        "accuracy": 0.512,
+        "precision": 0.10905730129390019,
+        "recall": 0.9076923076923077,
+        "f1": 0.19471947194719472,
+        "confusion_matrix": {
+          "tn": 453,
+          "fp": 482,
+          "fn": 6,
+          "tp": 59
+        },
+        "support": {
+          "negative": 935,
+          "positive": 65
+        },
+        "roc_auc": 0.7498231180584122,
+        "pr_auc": 0.13846251520615394
+      }
+    },
+    {
+      "feature_config": "B_sensor_only",
+      "model_name": "logistic_regression",
+      "n_train_rows": 4000,
+      "n_test_rows": 1000,
+      "metrics": {
+        "accuracy": 0.87,
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "f1": 0.5,
+        "confusion_matrix": {
+          "tn": 805,
+          "fp": 130,
+          "fn": 0,
+          "tp": 65
+        },
+        "support": {
+          "negative": 935,
+          "positive": 65
+        },
+        "roc_auc": 0.973229123817359,
+        "pr_auc": 0.6386250869254246
+      }
+    },
+    {
+      "feature_config": "B_sensor_only",
+      "model_name": "svm",
+      "n_train_rows": 4000,
+      "n_test_rows": 1000,
+      "metrics": {
+        "accuracy": 0.902,
+        "precision": 0.3987730061349693,
+        "recall": 1.0,
+        "f1": 0.5701754385964912,
+        "confusion_matrix": {
+          "tn": 837,
+          "fp": 98,
+          "fn": 0,
+          "tp": 65
+        },
+        "support": {
+          "negative": 935,
+          "positive": 65
+        },
+        "roc_auc": 0.9725709584533114,
+        "pr_auc": 0.6311158271613189
+      }
+    }
+  ],
+  "feature_importances_random_forest": {
+    "A_all_features": {
+      "Flow_Rate": 0.35537306702032473,
+      "Pressure": 0.34986250750153375,
+      "Block": 0.06791240725988863,
+      "Location_Code": 0.06507161926653297,
+      "Pipe": 0.058391433545127575,
+      "Operational_Hours": 0.01635038934368043,
+      "Longitude": 0.016153526485634735,
+      "Latitude": 0.015329735280196877,
+      "RPM": 0.015145576967120102,
+      "Vibration": 0.014465281404209064,
+      "Temperature": 0.013862016529259195,
+      "Zone": 0.012082439396491965
+    },
+    "B_sensor_only": {
+      "Flow_Rate": 0.5004993117997404,
+      "Pressure": 0.47833156261290183,
+      "Temperature": 0.007194340061233899,
+      "Operational_Hours": 0.0049542055376299125,
+      "RPM": 0.004668304892410669,
+      "Vibration": 0.004352275096083345
+    }
+  },
+  "legacy_claims_for_reference": {
+    "README_accuracy": {
+      "random_forest": 0.98,
+      "decision_tree": 0.91,
+      "svm": 0.9,
+      "logistic_regression": 0.89
+    },
+    "notebook_output_accuracy": {
+      "random_forest": 0.989,
+      "decision_tree": 0.91,
+      "logistic_regression": 0.89,
+      "svm": 0.907
+    },
+    "app_py_hardcoded_radar_chart": {
+      "random_forest": [
+        0.99,
+        0.98,
+        0.97,
+        0.98
+      ],
+      "decision_tree": [
+        0.95,
+        0.94,
+        0.92,
+        0.93
+      ],
+      "logistic_regression": [
+        0.93,
+        0.92,
+        0.9,
+        0.91
+      ],
+      "svm": [
+        0.94,
+        0.93,
+        0.91,
+        0.92
+      ],
+      "note": "these were hard-coded in app.py and are NOT measured values"
+    }
+  }
+}

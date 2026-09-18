@@ -1,0 +1,4 @@
+# Reference logging levels used by backend/app/utils/logging.py (env LOG_LEVEL overrides).
+levels: [DEBUG, INFO, WARNING, ERROR, CRITICAL]
+format: json
+fields: [ts, level, logger, msg, request_id, path, method, status_code, duration_ms]

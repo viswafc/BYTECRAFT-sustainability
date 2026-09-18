@@ -1,0 +1,36 @@
+# --- secrets / env
+.env
+.env.*
+!.env.example
+
+# --- python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- ML artifacts (regenerate with `python -m ml.train`; metadata JSON is kept)
+ml/artifacts/**/*.joblib
+ml/artifacts/**/*.pkl
+*.pkl
+data/processed/
+
+# --- node / frontend
+node_modules/
+frontend/dist/
+frontend/coverage/
+*.tsbuildinfo
+
+# --- docker / db
+pgdata/
+*.db
+*.sqlite
+
+# --- IDE / OS
+.vscode/
+.idea/
+.DS_Store
