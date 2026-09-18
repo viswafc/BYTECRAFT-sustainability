@@ -1,6 +1,8 @@
-.venv/
 node_modules/
-.env
-__pycache__/
-*.joblib
-.pytest_cache/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example

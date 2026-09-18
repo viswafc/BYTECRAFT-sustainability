@@ -1,0 +1,309 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #060e17;
+    --bg-surface: #0b1926;
+    --bg-surface-elevated: #112536;
+    --border-subtle: #193347;
+    --border-accent: #244b68;
+    --cyan: #28d7ff;
+    --emerald: #31d48c;
+    --crimson: #ff5b67;
+    --amber: #f59e0b;
+  }
+
+  body {
+    background-color: #060e17;
+    color: #e2eff8;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Smooth industrial scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #060e17;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #193347;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #244b68;
+  }
+}
+
+/* Fluid UI Card Tokens - Crafted, Non-generic, Deep Contrast */
+.ui-card {
+  background-color: #0c1c2b;
+  border: 1px solid #1a374d;
+  border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ui-card:hover {
+  border-color: #244b68;
+}
+
+.ui-card-elevated {
+  background: #0f2336;
+  border: 1px solid #1f435e;
+  border-radius: 12px;
+}
+
+/* Glass and Glow Accents */
+.glass-panel {
+  background: rgba(12, 28, 43, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #1a374d;
+}
+
+.glass-panel-subtle {
+  background: rgba(9, 21, 32, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #163044;
+}
+
+/* SVG Flow Animations */
+@keyframes flowDashGreen {
+  from { stroke-dashoffset: 36; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes flowDashRed {
+  from { stroke-dashoffset: 36; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes beaconPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.4;
+  }
+}
+
+@keyframes subtleRadarSweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.pipe-flow-green {
+  stroke-dasharray: 6 6;
+  animation: flowDashGreen 1.8s linear infinite;
+}
+
+.pipe-flow-red {
+  stroke-dasharray: 6 4;
+  animation: flowDashRed 0.9s linear infinite;
+}
+
+.pipe-flow-cyan {
+  stroke-dasharray: 8 6;
+  animation: flowDashGreen 1.4s linear infinite;
+}
+
+.pipe-flow-slow {
+  stroke-dasharray: 6 8;
+  animation: flowDashGreen 3.2s linear infinite;
+}
+
+.beacon {
+  animation: beaconPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes waterSprayJet {
+  0% {
+    transform: scale(0.9) translateY(0) rotate(0deg);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.18) translateY(-6px) rotate(-3deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0.9) translateY(0) rotate(0deg);
+    opacity: 0.95;
+  }
+}
+
+.water-spray-jet {
+  animation: waterSprayJet 0.8s ease-in-out infinite;
+  transform-origin: 930px 660px;
+}
+
+@keyframes leakPulseRings {
+  0% {
+    r: 8;
+    opacity: 0.9;
+  }
+  50% {
+    r: 32;
+    opacity: 0.4;
+  }
+  100% {
+    r: 52;
+    opacity: 0;
+  }
+}
+
+.leak-pulse-ring {
+  animation: leakPulseRings 1.4s ease-out infinite;
+}
+
+@keyframes spinRotor {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-rotor {
+  animation: spinRotor 3s linear infinite;
+}
+
+.spin-rotor-fast {
+  animation: spinRotor 1.2s linear infinite;
+}
+
+@keyframes ultrasonicPulse {
+  0% { r: 6; opacity: 0.9; stroke-width: 2.5; }
+  100% { r: 34; opacity: 0; stroke-width: 0.5; }
+}
+
+.ultrasonic-wave {
+  animation: ultrasonicPulse 1.5s ease-out infinite;
+}
+
+/* Interactive Slider Polish */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #07131e;
+  border-radius: 9999px;
+  height: 6px;
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #28d7ff;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(40, 215, 255, 0.6);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  background: #5fe3ff;
+}
+
+/* Rising Steam Animation for Cooling Towers */
+@keyframes risingSteam {
+  0% {
+    transform: translateY(0) scaleX(1) scaleY(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-24px) scaleX(1.3) scaleY(1.2);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateY(-50px) scaleX(1.8) scaleY(1.5);
+    opacity: 0;
+  }
+}
+
+.steam-cloud-1 {
+  animation: risingSteam 3.5s ease-out infinite;
+}
+
+.steam-cloud-2 {
+  animation: risingSteam 4.2s ease-out 1.2s infinite;
+}
+
+.steam-cloud-3 {
+  animation: risingSteam 3.8s ease-out 2s infinite;
+}
+
+/* Water surface undulation */
+@keyframes waterSurfaceWave {
+  0%, 100% { transform: translateY(0px) scaleY(1); }
+  50% { transform: translateY(-2px) scaleY(1.02); }
+}
+
+.water-surface {
+  animation: waterSurfaceWave 4s ease-in-out infinite;
+}
+
+/* Cyan neon glow on active pipeline flow arrows */
+@keyframes flowArrowPulse {
+  0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 4px #00e5ff); }
+  50% { opacity: 1; filter: drop-shadow(0 0 10px #00e5ff); }
+}
+
+.flow-arrow-pulse {
+  animation: flowArrowPulse 2s ease-in-out infinite;
+}
+
+/* Coral Pink glow */
+.glow-pink {
+  box-shadow: 0 0 20px rgba(255, 77, 109, 0.35);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
+}
+
+/* Pipe Rupture & Water Spray Geyser Keyframes */
+@keyframes waterSprayJet1 {
+  0% { transform: translate(0px, 0px) scale(0.6); opacity: 0.95; }
+  60% { transform: translate(14px, -30px) scale(1.1); opacity: 0.7; }
+  100% { transform: translate(24px, -52px) scale(1.4); opacity: 0; }
+}
+
+@keyframes waterSprayJet2 {
+  0% { transform: translate(0px, 0px) scale(0.5); opacity: 0.9; }
+  50% { transform: translate(-10px, -26px) scale(1); opacity: 0.75; }
+  100% { transform: translate(-18px, -46px) scale(1.3); opacity: 0; }
+}
+
+@keyframes waterSprayJet3 {
+  0% { transform: translate(0px, 0px) scale(0.7); opacity: 1; }
+  60% { transform: translate(4px, -38px) scale(1.2); opacity: 0.6; }
+  100% { transform: translate(8px, -62px) scale(1.5); opacity: 0; }
+}
+
+@keyframes leakPuddleRipple {
+  0% { rx: 6; ry: 3; opacity: 0.9; stroke-width: 2; }
+  100% { rx: 42; ry: 21; opacity: 0; stroke-width: 0.5; }
+}
+
+.water-spray-1 {
+  animation: waterSprayJet1 0.75s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+}
+
+.water-spray-2 {
+  animation: waterSprayJet2 0.85s cubic-bezier(0.2, 0.8, 0.4, 1) infinite 0.15s;
+}
+
+.water-spray-3 {
+  animation: waterSprayJet3 0.65s cubic-bezier(0.2, 0.8, 0.4, 1) infinite 0.3s;
+}
+
+.leak-ripple {
+  animation: leakPuddleRipple 1.6s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+}
+

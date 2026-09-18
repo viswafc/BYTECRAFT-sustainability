@@ -1,0 +1,7 @@
+{
+  "name": "AquaRisk AI",
+  "description": "Industrial Water Intelligence Platform for real-time factory water distribution network monitoring, leak detection, risk prediction, and financial impact analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
