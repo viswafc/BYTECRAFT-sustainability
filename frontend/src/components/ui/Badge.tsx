@@ -1,14 +1,14 @@
 import type { ReactNode } from 'react'
-import { cn } from '../../lib/cn'
+import { cn } from '../../utils/cn'
 
 export type Tone = 'normal' | 'warning' | 'critical' | 'info' | 'neutral'
 
 const tones: Record<Tone, string> = {
-  normal: 'bg-status-normal/15 text-status-normal border-status-normal/40',
-  warning: 'bg-status-warning/15 text-status-warning border-status-warning/40',
-  critical: 'bg-status-critical/15 text-status-critical border-status-critical/40',
-  info: 'bg-aqua-500/15 text-aqua-300 border-aqua-500/40',
-  neutral: 'bg-navy-700 text-text-muted border-navy-600',
+  normal: 'bg-success/15 text-success border-success/40',
+  warning: 'bg-warning/15 text-warning border-warning/40',
+  critical: 'bg-danger/15 text-danger border-danger/40',
+  info: 'bg-primary/15 text-primary-soft border-primary/40',
+  neutral: 'bg-surface-hover text-muted border-border-strong',
 }
 
 export function Badge({ tone = 'neutral', children, className }: { tone?: Tone; children: ReactNode; className?: string }) {

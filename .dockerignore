@@ -1,9 +1,11 @@
 .git
 .venv
+.env
 frontend/node_modules
 frontend/dist
 legacy
 reports
 docs
 **/__pycache__
-ml/artifacts
+ml/artifacts/**/*.joblib
+*.db

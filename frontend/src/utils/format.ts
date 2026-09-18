@@ -1,0 +1,5 @@
+export const fmtInt = (n: number | null | undefined) => (n == null ? '—' : n.toLocaleString('en-IN'))
+export const fmtPct = (x: number | null | undefined, d = 1) => (x == null ? '—' : `${(x * 100).toFixed(d)}%`)
+export const fmtNum = (x: number | null | undefined, d = 3) => (x == null ? '—' : x.toFixed(d))
+export const fmtTime = (iso: string | null | undefined) => (iso ? new Date(iso).toLocaleTimeString() : '—')
+export const fmtDateTime = (iso: string | null | undefined) => (iso ? new Date(iso).toLocaleString() : '—')

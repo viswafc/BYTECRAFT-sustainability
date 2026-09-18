@@ -36,6 +36,26 @@ Synthetic time-series generation, predictive risk, graph localisation, digital t
 financial engine, AI Copilot, action recommendations, full dashboard, IoT integration. `ChartContainer` slots on the
 Command Center are labelled as future-phase placeholders, not disguised features.
 
-## Phase 2 — not started
+## Phase 2 — Modular Industrial AI Architecture & Base Application
 
-Recommended entry point: see the "Exact recommended next step" section in the Phase 1 completion summary.
+**Status: COMPLETE** (Docker images again prepared but not executed — no daemon in the build sandbox)
+
+| Area | Status | Evidence |
+|---|---|---|
+| Backend layering | **OK** | `backend/app/{api,core,models,schemas,repositories,services,ml,websocket,utils}`; routes → schemas → services → repositories |
+| Database | **OK** | PostgreSQL 16 (local instance during development); Alembic `0001_core_entities`; 9 tables, FKs, indexes; seed 1/3/4/8/20, no readings/incidents |
+| API | **OK** | 24 REST routes + 2 WS routes (`docs/API.md`); success/error envelopes; no fake data |
+| ML abstraction | **OK** | `PredictionService` (load/predict/health/metadata) over Phase 1 registry; `MODEL_NOT_READY` when absent |
+| Telemetry abstraction | **OK** | `TelemetryProvider` with `database` and `null` implementations; simulator/IoT reserved |
+| Frontend | **OK** | 9 sidebar routes + Command Center, all open; centralized API client, Zustand store, loading/error/empty states, WS status, toasts |
+| WebSocket | **OK** | `/api/ws/system`, `/api/ws/sensors` — `connected`, `system_heartbeat`, ping/pong only; verified through the Vite proxy |
+| Observability | **OK** | JSON request logs with request id + duration; per-component ONLINE/DEGRADED/OFFLINE/UNKNOWN |
+| Tests | **OK** | pytest 41 (backend 26 incl. real-Postgres repository/API tests, ml 11, data 5 — see `make test-py`), vitest 9, `tsc -b` clean, `npm run build` OK |
+| Docker | **prepared, not executed** | `docker/{backend,frontend}.Dockerfile`, `docker/nginx.conf`, `docker-compose.yml` (db, migrate, backend, frontend) YAML-validated |
+
+### Explicitly NOT done (per Phase 2 scope)
+Leak prediction UI, production-aware baseline, predictive risk, graph localisation, counterfactual/financial
+engines, AI Copilot, digital-twin simulation, incident lifecycle (create/ack/resolve), hardware/IoT ingestion.
+Pages for these render "Intelligence module not initialized".
+
+## Phase 3 — not started

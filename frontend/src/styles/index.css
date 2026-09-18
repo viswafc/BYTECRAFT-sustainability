@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   AquaRisk AI design tokens — dark industrial + aqua intelligence
+   All colours in the app come from these tokens (no ad-hoc hex values).
+   ===================================================================== */
+@theme {
+  /* semantic */
+  --color-bg: #060b16;
+  --color-bg-elevated: #0a1220;
+  --color-surface: #101b2e;
+  --color-surface-hover: #18263d;
+  --color-border: #1e2d47;
+  --color-border-strong: #2b3d5e;
+
+  --color-primary: #14c8e0;
+  --color-primary-strong: #3ee0f5;
+  --color-primary-soft: #7ff3ff;
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #3b82f6;
+  --color-neutral: #64748b;
+
+  --color-text: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-muted-soft: #64748b;
+
+  /* typography */
+  --font-sans: "Inter", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* radii / shadows */
+  --radius-card: 0.75rem;
+  --shadow-glow: 0 0 20px rgb(20 200 224 / 0.25);
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  @apply bg-bg text-text antialiased;
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgb(20 200 224 / 0.08), transparent 60%),
+    radial-gradient(800px 400px at -10% 110%, rgb(20 200 224 / 0.05), transparent 60%);
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 8px; }
+
+/* telemetry / numeric readouts */
+.telemetry { @apply font-mono tabular-nums; }

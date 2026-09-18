@@ -5,11 +5,11 @@ import logging
 from functools import lru_cache
 from pathlib import Path
 
-from ml.preprocess import DatasetSchemaError, load_dataset
+from ml.preprocessing.pipeline import DatasetSchemaError, load_dataset
 from ml.schemas import TARGET
 
-from ..config import get_settings
-from ..schemas.common import ComponentStatus, DataHealthResponse
+from ..core.config import get_settings
+from ..schemas.system import DataHealthResponse
 
 log = logging.getLogger("aquarisk.data")
 
@@ -26,27 +26,20 @@ class DataService:
         try:
             df = load_dataset(self.dataset_path)
         except FileNotFoundError as e:
-            self._cache = DataHealthResponse(status="error", dataset_path=p, detail=str(e), schema_valid=False)
+            self._cache = DataHealthResponse(state="OFFLINE", dataset_path=p, detail=str(e), schema_valid=False)
             return self._cache
         except DatasetSchemaError as e:
-            self._cache = DataHealthResponse(status="error", dataset_path=p, detail=str(e), schema_valid=False)
+            self._cache = DataHealthResponse(state="OFFLINE", dataset_path=p, detail=str(e), schema_valid=False)
             return self._cache
         missing = int(df.isnull().sum().sum())
         dups = int(df.duplicated().sum())
         self._cache = DataHealthResponse(
-            status="ok" if missing == 0 and dups == 0 else "degraded",
+            state="ONLINE" if missing == 0 and dups == 0 else "DEGRADED",
             dataset_path=p, rows=int(len(df)), columns=int(df.shape[1]),
             missing_values=missing, duplicate_rows=dups,
             positive_rate=float(df[TARGET].mean()), schema_valid=True,
         )
         return self._cache
-
-    def status(self) -> ComponentStatus:
-        h = self.health()
-        return ComponentStatus(
-            name="dataset", status=h.status, detail=h.detail or f"{h.rows} rows x {h.columns} cols",
-            info={"positive_rate": h.positive_rate, "path": h.dataset_path},
-        )
 
 
 @lru_cache

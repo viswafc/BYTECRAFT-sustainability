@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from ml.preprocess import DatasetSchemaError, load_dataset, validate_dataset
+from ml.preprocessing.pipeline import DatasetSchemaError, load_dataset, validate_dataset
 from ml.schemas import DEFAULT_DATASET_PATH, RAW_COLUMNS, TARGET
 
 

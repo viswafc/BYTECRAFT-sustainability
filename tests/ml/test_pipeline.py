@@ -1,11 +1,11 @@
 import pytest
 
-from ml.evaluate import compute_metrics
-from ml.inference import LeakPredictor
-from ml.model_registry import ModelNotFoundError, ModelRegistry
-from ml.preprocess import build_preprocessor, load_dataset, make_train_test_split, split_features_target
+from ml.evaluation.metrics import compute_metrics
+from ml.inference.predictor import LeakPredictor
+from ml.registry import ModelNotFoundError, ModelRegistry
+from ml.preprocessing.pipeline import build_preprocessor, load_dataset, make_train_test_split, split_features_target
 from ml.schemas import DEFAULT_ARTIFACT_DIR, FEATURE_CONFIGS, SensorReadingInput
-from ml.train import build_pipeline, train_one
+from ml.training.train import build_pipeline, train_one
 
 
 @pytest.fixture(scope="module")

@@ -16,7 +16,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from ml.preprocess import file_sha256, load_dataset  # noqa: E402
+from ml.preprocessing.pipeline import file_sha256, load_dataset  # noqa: E402
 from ml.schemas import (  # noqa: E402
     CATEGORICAL_LOCATION_FEATURES, DEFAULT_DATASET_PATH, GEO_FEATURES, SENSOR_FEATURES, TARGET,
 )

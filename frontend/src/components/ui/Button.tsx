@@ -1,14 +1,14 @@
 import type { ButtonHTMLAttributes } from 'react'
-import { cn } from '../../lib/cn'
+import { cn } from '../../utils/cn'
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'danger'
 type Size = 'sm' | 'md'
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-aqua-500 text-navy-950 hover:bg-aqua-400 font-semibold shadow-[0_0_20px_rgba(20,200,224,0.25)]',
-  secondary: 'bg-navy-700 text-text-primary hover:bg-navy-600 border border-navy-600',
-  ghost: 'bg-transparent text-text-muted hover:text-text-primary hover:bg-navy-800',
-  danger: 'bg-status-critical/90 text-white hover:bg-status-critical',
+  primary: 'bg-primary text-bg hover:bg-primary-strong font-semibold shadow-glow',
+  secondary: 'bg-surface-hover text-text hover:bg-border-strong border border-border-strong',
+  ghost: 'bg-transparent text-muted hover:text-text hover:bg-surface',
+  danger: 'bg-danger/90 text-white hover:bg-danger',
 }
 const sizes: Record<Size, string> = { sm: 'h-8 px-3 text-xs', md: 'h-10 px-4 text-sm' }
 
@@ -22,7 +22,7 @@ export function Button({ variant = 'primary', size = 'md', loading, className, c
   return (
     <button
       className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400',
+        'inline-flex items-center justify-center gap-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-strong',
         variants[variant], sizes[size], className,
       )}
       disabled={disabled || loading}

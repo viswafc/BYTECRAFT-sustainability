@@ -15,8 +15,11 @@ export default defineConfig({
     port: 5173,
     allowedHosts: true,
     proxy: {
+      '/api/ws': { target: backend.replace(/^http/, 'ws'), ws: true },
       '/api': backend,
       '/health': backend,
+      '/docs': backend,
+      '/openapi.json': backend,
     },
   },
   preview: { host: '0.0.0.0', port: 5173, allowedHosts: true },

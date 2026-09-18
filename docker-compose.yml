@@ -8,25 +8,28 @@ services:
     ports: ["5432:5432"]
     volumes: [pgdata:/var/lib/postgresql/data]
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-aquarisk}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-aquarisk} -d ${POSTGRES_DB:-aquarisk}"]
       interval: 5s
       timeout: 3s
       retries: 10
 
+  # one-shot: migrate + seed infrastructure, then exit
   migrate:
-    build: { context: ., dockerfile: backend/Dockerfile }
-    command: alembic -c database/alembic.ini upgrade head
+    build: { context: ., dockerfile: docker/backend.Dockerfile }
+    command: sh -c "alembic -c database/alembic.ini upgrade head && python database/seeds/seed_infrastructure.py"
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-aquarisk}:${POSTGRES_PASSWORD:-aquarisk}@db:5432/${POSTGRES_DB:-aquarisk}
     depends_on:
       db: { condition: service_healthy }
 
   backend:
-    build: { context: ., dockerfile: backend/Dockerfile }
+    build: { context: ., dockerfile: docker/backend.Dockerfile }
     environment:
       ENVIRONMENT: ${ENVIRONMENT:-docker}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-aquarisk}:${POSTGRES_PASSWORD:-aquarisk}@db:5432/${POSTGRES_DB:-aquarisk}
+      TELEMETRY_PROVIDER: ${TELEMETRY_PROVIDER:-database}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:5173}
       AI_PROVIDER: ${AI_PROVIDER:-}
       AI_MODEL: ${AI_MODEL:-}
       AI_API_KEY: ${AI_API_KEY:-}
@@ -40,7 +43,7 @@ services:
       retries: 5
 
   frontend:
-    build: ./frontend
+    build: { context: ., dockerfile: docker/frontend.Dockerfile }
     ports: ["3000:80"]
     depends_on: [backend]
 
