@@ -1,0 +1,25 @@
+{
+    "dataset_version": "1.0",
+    "created_at": "2026-09-18T08:39:08.772165",
+    "generator_version": "1.0",
+    "days_simulated": 30,
+    "interval_minutes": 5,
+    "seed": 42,
+    "total_rows": 33851,
+    "splits": {
+        "train": 23634,
+        "validation": 5184,
+        "test": 5033
+    },
+    "label_distribution": {
+        "NORMAL_OPERATION": 17868,
+        "NORMAL_PRODUCTION_VARIATION": 4784,
+        "POSSIBLE_LEAK": 4204,
+        "SENSOR_FAULT": 2079,
+        "GRADUAL_LEAK": 1388,
+        "MAJOR_LEAK": 1336,
+        "MAINTENANCE_EVENT": 1112,
+        "CRITICAL_LEAK": 872,
+        "PRESSURE_DISTURBANCE": 208
+    }
+}

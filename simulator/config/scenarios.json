@@ -1,0 +1,58 @@
+{
+  "scenarios": {
+    "NORMAL_OPERATION": {
+      "type": "normal",
+      "probability": 0.60
+    },
+    "NORMAL_PRODUCTION_VARIATION": {
+      "type": "surge",
+      "probability": 0.15,
+      "multiplier": 1.3
+    },
+    "POSSIBLE_LEAK": {
+      "type": "leak",
+      "probability": 0.05,
+      "flow_increase_pct": 0.15,
+      "pressure_drop_pct": 0.10,
+      "duration_hours": [2, 12]
+    },
+    "GRADUAL_LEAK": {
+      "type": "leak_gradual",
+      "probability": 0.05,
+      "target_flow_increase_pct": 0.60,
+      "target_pressure_drop_pct": 0.40,
+      "ramp_up_hours": [4, 24]
+    },
+    "MAJOR_LEAK": {
+      "type": "leak",
+      "probability": 0.03,
+      "flow_increase_pct": 0.80,
+      "pressure_drop_pct": 0.50,
+      "duration_hours": [1, 6]
+    },
+    "CRITICAL_LEAK": {
+      "type": "leak",
+      "probability": 0.02,
+      "flow_increase_pct": 1.50,
+      "pressure_drop_pct": 0.80,
+      "duration_hours": [1, 4]
+    },
+    "SENSOR_FAULT": {
+      "type": "fault",
+      "probability": 0.05,
+      "fault_types": ["stuck", "spike", "drift", "missing"],
+      "duration_hours": [1, 8]
+    },
+    "PRESSURE_DISTURBANCE": {
+      "type": "disturbance",
+      "probability": 0.02,
+      "pressure_drop_pct": 0.25,
+      "flow_increase_pct": 0.0
+    },
+    "MAINTENANCE_EVENT": {
+      "type": "maintenance",
+      "probability": 0.03,
+      "duration_hours": [2, 12]
+    }
+  }
+}

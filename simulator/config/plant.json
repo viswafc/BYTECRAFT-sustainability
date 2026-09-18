@@ -1,0 +1,61 @@
+{
+  "plant_id": "AMF-01",
+  "name": "Aqua Main Facility",
+  "topology": {
+    "zones": [
+      {
+        "zone_id": "NW-01",
+        "name": "North Wing",
+        "lines": [
+          {
+            "line_id": "L-CA",
+            "name": "Cooling Line A",
+            "upstream_node": "MAIN_TANK",
+            "machines": [
+              {
+                "machine_id": "P1-L-CA",
+                "name": "Cooling Pump 1",
+                "type": "pump",
+                "base_flow_lph": 5000,
+                "base_pressure_bar": 6.0,
+                "sensors": [
+                  {"sensor_id": "SENS-P1-L-CA-PRE-1", "type": "pressure", "range": [0, 10]},
+                  {"sensor_id": "SENS-P1-L-CA-FLO-1", "type": "flow", "range": [0, 8000]}
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "zone_id": "SW-01",
+        "name": "South Wing",
+        "lines": [
+          {
+            "line_id": "L-PB",
+            "name": "Production Line B",
+            "upstream_node": "MAIN_TANK",
+            "machines": [
+              {
+                "machine_id": "VA-L-PB",
+                "name": "Main Valve B",
+                "type": "valve",
+                "base_flow_lph": 3000,
+                "base_pressure_bar": 4.5,
+                "sensors": [
+                  {"sensor_id": "SENS-VA-L-PB-PRE-1", "type": "pressure", "range": [0, 10]},
+                  {"sensor_id": "SENS-VA-L-PB-FLO-1", "type": "flow", "range": [0, 5000]}
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "sensor_defaults": {
+    "noise_level_pct": 0.02,
+    "spike_probability": 0.001,
+    "missing_probability": 0.005
+  }
+}
