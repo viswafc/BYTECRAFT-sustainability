@@ -28,7 +28,7 @@ export const AnalyticsPage: React.FC = () => {
           { label: 'Leak Incidents', value: '06', icon: 'report_problem', iconColor: 'text-status-critical', badge: 'Detected this month', badgeColor: 'text-text-secondary', dot: 'bg-status-critical animate-pulse' },
           { label: 'Financial Impact', value: '₹2,27,040', icon: 'currency_rupee', iconColor: 'text-text-muted', badge: 'Estimated total bleed', badgeColor: 'text-status-critical', dot: '' },
         ].map((m, i) => (
-          <div key={i} className="bg-surface-card border border-surface-border rounded p-6 flex flex-col justify-between">
+          <div key={i} className={`bg-surface-card border border-surface-border rounded p-6 flex flex-col justify-between hover-lift animate-fade-in-up`} style={{ animationDelay: `${i * 100}ms` }}>
             <div className="flex items-center justify-between">
               <span className="text-label-sm tracking-wider uppercase text-text-muted">{m.label}</span>
               <span className={`material-symbols-outlined text-[18px] ${m.iconColor}`}>{m.icon}</span>
@@ -45,7 +45,7 @@ export const AnalyticsPage: React.FC = () => {
       </section>
 
       {/* Primary Chart */}
-      <section className="bg-surface-card border border-surface-border rounded p-6 flex flex-col">
+      <section className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col hover-lift delay-300">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
           <div>
             <h2 className="text-headline-md text-text-main tracking-tight">Expected vs Actual Water Consumption</h2>
@@ -113,7 +113,7 @@ export const AnalyticsPage: React.FC = () => {
       {/* Two Side-by-Side Charts */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Water Loss by Zone */}
-        <div className="bg-surface-card border border-surface-border rounded p-6 flex flex-col justify-between">
+        <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col justify-between hover-lift delay-400">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-headline-md text-text-main tracking-tight">Water Loss by Zone</h3>
@@ -142,7 +142,7 @@ export const AnalyticsPage: React.FC = () => {
         </div>
 
         {/* Incidents Over Time */}
-        <div className="bg-surface-card border border-surface-border rounded p-6 flex flex-col justify-between">
+        <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col justify-between hover-lift delay-400">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-headline-md text-text-main tracking-tight">Incidents Over Time</h3>
@@ -168,8 +168,8 @@ export const AnalyticsPage: React.FC = () => {
       </section>
 
       {/* AI Insight Banner */}
-      <section className="bg-surface-card border border-surface-border rounded p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+      <section className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden hover-lift delay-500">
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgba(40,215,255,0.8)]"></div>
         <div className="flex items-start gap-4 pl-1">
           <div className="w-10 h-10 rounded bg-surface-subtle border border-surface-border flex items-center justify-center text-primary shrink-0 mt-0.5">
             <span className="material-symbols-outlined text-[24px]">auto_awesome</span>
@@ -185,7 +185,7 @@ export const AnalyticsPage: React.FC = () => {
           </div>
         </div>
         <div className="shrink-0 self-end md:self-center pl-1 md:pl-0">
-          <button className="px-6 py-2.5 rounded bg-primary text-background text-label-lg font-semibold hover:bg-primary-hover transition-colors active:scale-[0.98] flex items-center gap-2">
+          <button className="px-6 py-2.5 rounded bg-gradient-to-r from-primary to-[#007EA7] text-background text-label-lg font-semibold hover:shadow-[0_0_15px_rgba(40,215,255,0.4)] transition-all active:scale-[0.98] flex items-center gap-2 hover-lift">
             VIEW INCIDENT
             <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
           </button>

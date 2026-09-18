@@ -54,7 +54,7 @@ export const SettingsPage: React.FC = () => {
           <h1 className="text-display-lg font-bold text-text-main tracking-tight">Settings</h1>
           <p className="text-body-lg text-text-secondary mt-1">Plant management, sensor configuration, safety rules, and system diagnostics.</p>
         </div>
-        <button className="px-5 py-2 rounded bg-primary text-background font-bold text-label-lg hover:bg-primary-hover transition-colors active:scale-[0.98] flex items-center gap-2 self-start md:self-auto">
+        <button className="px-5 py-2 rounded bg-gradient-to-r from-primary to-[#007EA7] text-background font-bold text-label-lg hover:shadow-[0_0_15px_rgba(40,215,255,0.4)] transition-all active:scale-[0.98] flex items-center gap-2 self-start md:self-auto hover-lift">
           <span className="material-symbols-outlined text-[16px]">save</span>
           SAVE CHANGES
         </button>
@@ -75,7 +75,7 @@ export const SettingsPage: React.FC = () => {
         {/* ── PLANT PROFILE ── */}
         {activeTab === 'plant' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-5">
+            <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col gap-5 hover-lift delay-100 animate-fade-in-up">
               <div className="flex items-center gap-2 pb-3 border-b border-surface-border">
                 <span className="material-symbols-outlined text-primary text-[20px]">factory</span>
                 <h2 className="text-headline-md font-bold text-text-main">Plant Information</h2>
@@ -97,7 +97,7 @@ export const SettingsPage: React.FC = () => {
                 </div>
               ))}
             </div>
-            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-5">
+            <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col gap-5 hover-lift delay-100 animate-fade-in-up">
               <div className="flex items-center gap-2 pb-3 border-b border-surface-border">
                 <span className="material-symbols-outlined text-primary text-[20px]">speed</span>
                 <h2 className="text-headline-md font-bold text-text-main">Capacity & Performance</h2>
@@ -124,7 +124,7 @@ export const SettingsPage: React.FC = () => {
 
         {/* ── SENSOR CONFIG ── */}
         {activeTab === 'sensors' && (
-          <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-4">
+          <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col gap-4 hover-lift delay-100 animate-fade-in-up">
             <div className="flex items-center justify-between pb-3 border-b border-surface-border">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary text-[20px]">sensors</span>
@@ -177,7 +177,7 @@ export const SettingsPage: React.FC = () => {
         {/* ── SAFETY RULES ── */}
         {activeTab === 'safety' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-4">
+            <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col gap-4 hover-lift delay-100 animate-fade-in-up">
               <div className="flex items-center gap-2 pb-3 border-b border-surface-border">
                 <span className="material-symbols-outlined text-status-warning text-[20px]">notifications_active</span>
                 <h2 className="text-headline-md font-bold text-text-main">Alert Thresholds</h2>
@@ -199,7 +199,7 @@ export const SettingsPage: React.FC = () => {
                 </div>
               ))}
             </div>
-            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-4">
+            <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col gap-4 hover-lift delay-100 animate-fade-in-up">
               <div className="flex items-center gap-2 pb-3 border-b border-surface-border">
                 <span className="material-symbols-outlined text-status-critical text-[20px]">emergency</span>
                 <h2 className="text-headline-md font-bold text-text-main">Emergency Protocols</h2>
@@ -227,7 +227,7 @@ export const SettingsPage: React.FC = () => {
         {/* ── SYSTEM DIAGNOSTICS ── */}
         {activeTab === 'system' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-4">
+            <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col gap-4 hover-lift delay-100 animate-fade-in-up">
               <div className="flex items-center gap-2 pb-3 border-b border-surface-border">
                 <span className="material-symbols-outlined text-primary text-[20px]">dns</span>
                 <h2 className="text-headline-md font-bold text-text-main">Service Status</h2>
@@ -259,7 +259,7 @@ export const SettingsPage: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-4">
+            <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col gap-4 hover-lift delay-100 animate-fade-in-up">
               <div className="flex items-center gap-2 pb-3 border-b border-surface-border">
                 <span className="material-symbols-outlined text-primary text-[20px]">info</span>
                 <h2 className="text-headline-md font-bold text-text-main">System Information</h2>
@@ -286,7 +286,7 @@ export const SettingsPage: React.FC = () => {
 
         {/* ── 3D DIGITAL TWIN PREVIEW ── */}
         {activeTab === 'twin' && (
-          <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-4">
+          <div className="glass-panel border border-surface-border rounded-lg p-6 flex flex-col gap-4 hover-lift delay-100 animate-fade-in-up">
             <div className="flex items-center gap-2 pb-3 border-b border-surface-border">
               <span className="material-symbols-outlined text-primary text-[20px]">view_in_ar</span>
               <h2 className="text-headline-md font-bold text-text-main">3D Digital Twin Preview</h2>

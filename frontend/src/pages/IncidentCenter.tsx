@@ -216,8 +216,8 @@ export const IncidentCenter: React.FC = () => {
       </section>
 
       {/* Recent Incidents Table */}
-      <section className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
+      <section className="bg-surface-card border border-surface-border rounded-lg flex flex-col flex-1 overflow-hidden hover-lift delay-300">
+        <div className="flex items-center justify-between p-4 border-b border-surface-border/60 bg-surface-container">
           <div>
             <h3 className="text-headline-md font-bold text-text-main">Recent Incidents</h3>
             <p className="text-body-sm text-text-secondary">Chronological telemetry audit log for Plant 01</p>
@@ -239,7 +239,7 @@ export const IncidentCenter: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-surface-border/50 text-body-md text-text-main">
               {recentIncidents.map((inc, i) => (
-                <tr key={i} className="hover:bg-surface-elevated/70 transition-colors h-[48px]">
+                <tr key={i} className="hover:bg-surface-elevated/50 transition-colors animate-fade-in-up" style={{ animationDelay: `${i * 50}ms` }}>
                   <td className="py-3 px-4 whitespace-nowrap">
                     <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-label-sm bg-${inc.sevColor}/15 text-${inc.sevColor} border border-${inc.sevColor}/40 font-semibold`}>
                       <span className={`w-1.5 h-1.5 rounded-full bg-${inc.sevColor}`}></span>

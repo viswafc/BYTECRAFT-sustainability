@@ -100,7 +100,7 @@ export const CommandCenter: React.FC = () => {
 
           {/* 4 High-Impact Stat Anchors */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-3">
-            <div className="bg-surface-container/90 p-2.5 rounded border border-status-critical/50 flex flex-col">
+            <div className="bg-surface-container/90 p-2.5 rounded border border-status-critical/50 flex flex-col hover-lift delay-100">
               <div className="flex items-center justify-between text-text-muted text-xs">
                 <span>Current Water Loss Rate</span>
                 <span className="text-status-critical font-mono font-bold text-[11px]">CRITICAL</span>
@@ -111,7 +111,7 @@ export const CommandCenter: React.FC = () => {
               </div>
               <span className="text-[11px] text-status-critical/90 font-mono mt-0.5">Continuous unmetered loss</span>
             </div>
-            <div className="bg-surface-container/90 p-2.5 rounded border border-surface-border flex flex-col">
+            <div className="bg-surface-container/90 p-2.5 rounded border border-surface-border flex flex-col hover-lift delay-200">
               <div className="flex items-center justify-between text-text-muted text-xs">
                 <span>Projected 24h Loss</span>
                 <span className="text-status-warning font-mono font-bold text-[11px]">HIGH</span>
@@ -122,7 +122,7 @@ export const CommandCenter: React.FC = () => {
               </div>
               <span className="text-[11px] text-text-muted font-mono mt-0.5">If not isolated today</span>
             </div>
-            <div className="bg-surface-container/90 p-2.5 rounded border border-surface-border flex flex-col">
+            <div className="bg-surface-container/90 p-2.5 rounded border border-surface-border flex flex-col hover-lift delay-300">
               <div className="flex items-center justify-between text-text-muted text-xs">
                 <span>Direct Financial Bleed</span>
                 <span className="text-primary font-mono text-[11px]">COST / DAY</span>
@@ -133,7 +133,7 @@ export const CommandCenter: React.FC = () => {
               </div>
               <span className="text-[11px] text-text-muted font-mono mt-0.5">+ escalated municipal tariff</span>
             </div>
-            <div className="bg-surface-container/90 p-2.5 rounded border border-primary/40 flex flex-col justify-between">
+            <div className="bg-surface-container/90 p-2.5 rounded border border-primary/40 flex flex-col justify-between hover-lift delay-400">
               <div className="text-xs text-primary font-bold flex items-center gap-1">
                 <span className="material-symbols-outlined text-[15px]">assistant_direction</span>
                 Action Required Now
@@ -142,10 +142,10 @@ export const CommandCenter: React.FC = () => {
                 Inspect <span className="text-status-critical font-mono font-bold">S05–S06</span> & isolate valve <span className="text-primary font-mono">BV-102</span>
               </div>
               <div className="mt-2 flex gap-1.5">
-                <button className="flex-1 py-1 bg-primary text-background font-bold text-[11px] rounded hover:brightness-110" onClick={() => setShowInvestigationModal(true)}>
+                <button className="flex-1 py-1 bg-gradient-to-r from-primary to-[#007EA7] text-background font-bold text-[11px] rounded hover:shadow-[0_0_15px_rgba(40,215,255,0.4)] transition-all" onClick={() => setShowInvestigationModal(true)}>
                   Investigate
                 </button>
-                <button className="flex-1 py-1 bg-status-critical/20 border border-status-critical text-status-critical font-bold text-[11px] rounded hover:bg-status-critical/30" onClick={handleIsolation}>
+                <button className="flex-1 py-1 bg-status-critical/20 border border-status-critical text-status-critical font-bold text-[11px] rounded hover:bg-status-critical hover:text-background transition-colors" onClick={handleIsolation}>
                   Isolate BV-102
                 </button>
               </div>
@@ -216,7 +216,7 @@ export const CommandCenter: React.FC = () => {
             </div>
 
             {/* SVG DIGITAL TWIN */}
-            <div className="relative bg-surface-container-lowest rounded border border-surface-border flex-1 min-h-[360px] flex items-center justify-center p-3 select-none overflow-hidden">
+            <div className="relative glass-panel rounded-lg border border-surface-border flex-1 min-h-[360px] flex items-center justify-center p-3 select-none overflow-hidden shadow-[inset_0_0_50px_rgba(255,91,103,0.05)]">
               <svg className="w-full h-full max-h-[400px]" viewBox="0 0 760 360">
                 <defs>
                   <linearGradient id="tankGrad" x1="0" x2="0" y1="1" y2="0">
@@ -398,11 +398,11 @@ export const CommandCenter: React.FC = () => {
             </div>
             <div className="text-[11px] text-text-muted font-mono">{sim.context}</div>
             <div className="flex gap-2 pt-1">
-              <button className="flex-1 py-2 bg-primary text-background font-bold text-xs rounded hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1" onClick={() => setShowInvestigationModal(true)}>
+              <button className="flex-1 py-2 bg-gradient-to-r from-primary to-[#007EA7] text-background font-bold text-xs rounded hover:shadow-[0_0_15px_rgba(40,215,255,0.4)] active:scale-95 transition-all flex items-center justify-center gap-1 hover-lift" onClick={() => setShowInvestigationModal(true)}>
                 <span className="material-symbols-outlined text-[16px]">search</span>
                 INVESTIGATE INCIDENT
               </button>
-              <button className="flex-1 py-2 bg-surface-elevated border border-surface-border hover:border-status-critical text-status-critical font-bold text-xs rounded transition-all flex items-center justify-center gap-1" onClick={handleIsolation}>
+              <button className="flex-1 py-2 bg-surface-elevated border border-status-critical/50 hover:bg-status-critical hover:text-background text-status-critical font-bold text-xs rounded transition-all flex items-center justify-center gap-1 hover-lift" onClick={handleIsolation}>
                 <span className="material-symbols-outlined text-[16px]">power_settings_new</span>
                 ISOLATE VALVE NOW
               </button>
@@ -413,8 +413,8 @@ export const CommandCenter: React.FC = () => {
 
       {/* ═══ SEGMENT MODAL ═══ */}
       {showSegmentModal && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowSegmentModal(false)}>
-          <div className="bg-surface-container border-2 border-status-critical rounded-lg p-5 w-full max-w-md shadow-2xl flex flex-col gap-4" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-background/60 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in" onClick={() => setShowSegmentModal(false)}>
+          <div className="glass-panel border-2 border-status-critical rounded-lg p-5 w-full max-w-md shadow-2xl flex flex-col gap-4 animate-fade-in-up" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between border-b border-surface-border pb-2.5">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-full bg-status-critical beacon"></span>
@@ -460,8 +460,8 @@ export const CommandCenter: React.FC = () => {
 
       {/* ═══ INVESTIGATION MODAL ═══ */}
       {showInvestigationModal && (
-        <div className="fixed inset-0 bg-background/85 backdrop-blur-md z-50 flex items-center justify-center p-4" onClick={() => setShowInvestigationModal(false)}>
-          <div className="bg-surface-container border border-surface-border rounded-lg p-6 w-full max-w-2xl shadow-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-background/60 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in" onClick={() => setShowInvestigationModal(false)}>
+          <div className="glass-panel border border-surface-border rounded-lg p-6 w-full max-w-2xl shadow-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto animate-fade-in-up" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between border-b border-surface-border pb-3">
               <div className="flex items-center gap-2.5">
                 <span className="material-symbols-outlined text-primary text-[24px]">troubleshoot</span>

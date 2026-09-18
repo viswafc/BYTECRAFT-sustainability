@@ -54,7 +54,7 @@ function App() {
   return (
     <div className="flex min-h-screen bg-background text-text-main font-sans antialiased select-none">
       {/* ═══ LEFT SIDEBAR ═══ */}
-      <aside className="fixed top-0 left-0 h-screen w-60 z-40 bg-surface-subtle border-r border-surface-border flex flex-col justify-between p-4">
+      <aside className="fixed top-0 left-0 h-screen w-60 z-40 glass-panel border-r border-surface-border flex flex-col justify-between p-4">
         <div className="flex flex-col gap-4">
           {/* Brand */}
           <div className="flex items-center gap-2.5 px-2 py-1">
@@ -115,7 +115,7 @@ function App() {
       {/* ═══ MAIN WRAPPER ═══ */}
       <div className="ml-60 flex-1 flex flex-col min-h-screen">
         {/* ═══ TOP HEADER ═══ */}
-        <header className="sticky top-0 right-0 h-14 z-30 bg-surface-subtle border-b border-surface-border flex items-center justify-between px-6">
+        <header className="sticky top-0 right-0 h-14 z-30 glass-panel border-b border-surface-border flex items-center justify-between px-6 backdrop-blur-xl">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 px-2.5 py-1 rounded bg-surface-card border border-surface-border">
               <span className="material-symbols-outlined text-primary text-[18px]">factory</span>
@@ -138,22 +138,22 @@ function App() {
               <span className={`w-1.5 h-1.5 rounded-full ${systemOnline ? 'bg-status-operational' : 'bg-status-critical'}`}></span>
               {systemOnline ? 'System Online' : 'Offline'}
             </div>
-            <button className="relative p-1.5 rounded hover:bg-surface-elevated text-text-secondary hover:text-text-main transition-colors">
+            <button className="relative p-1.5 rounded hover:bg-surface-elevated text-text-secondary hover:text-text-main transition-colors hover-lift">
               <span className="material-symbols-outlined text-[20px]">notifications</span>
               <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-status-critical"></span>
             </button>
             <div className="h-6 w-px bg-surface-border"></div>
-            <button className="px-3 py-1.5 rounded border border-surface-border text-text-main hover:border-primary hover:text-primary text-xs font-semibold transition-colors active:scale-[0.98]">
+            <button className="px-3 py-1.5 rounded border border-surface-border text-text-main hover:border-primary hover:text-primary text-xs font-semibold transition-colors active:scale-[0.98] hover-lift">
               Branch Scenario
             </button>
-            <button className="px-3 py-1.5 rounded bg-primary text-background text-xs font-bold hover:bg-primary-hover transition-colors active:scale-[0.98]">
+            <button className="px-3 py-1.5 rounded bg-gradient-to-r from-primary to-[#007EA7] text-background text-xs font-bold hover:shadow-[0_0_15px_rgba(40,215,255,0.4)] transition-all active:scale-[0.98] hover-lift">
               Execute Action
             </button>
           </div>
         </header>
 
         {/* ═══ PAGE CONTENT ═══ */}
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto animate-fade-in-up">
           {activePage === 'command' && <CommandCenter />}
           {activePage === 'incidents' && <IncidentCenter />}
           {activePage === 'twin' && <DigitalTwinPage />}

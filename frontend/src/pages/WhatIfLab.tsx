@@ -49,7 +49,7 @@ export const WhatIfLab: React.FC = () => {
             <span className="material-symbols-outlined text-[16px]">refresh</span>
             RESET
           </button>
-          <button onClick={runSimulation} disabled={isRunning} className="px-6 py-2 rounded bg-primary text-background font-bold text-label-lg hover:bg-primary-hover transition-colors flex items-center gap-2 active:scale-[0.98] disabled:opacity-50">
+          <button onClick={runSimulation} disabled={isRunning} className="px-6 py-2 rounded bg-gradient-to-r from-primary to-[#007EA7] text-background font-bold text-label-lg hover:shadow-[0_0_15px_rgba(40,215,255,0.4)] transition-all flex items-center gap-2 active:scale-[0.98] disabled:opacity-50 hover-lift">
             <span className="material-symbols-outlined text-[16px]">{isRunning ? 'hourglass_empty' : 'play_arrow'}</span>
             {isRunning ? 'SIMULATING...' : 'RUN SIMULATION'}
           </button>
@@ -59,7 +59,7 @@ export const WhatIfLab: React.FC = () => {
       {/* Config + Results */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* LEFT: Scenario Builder (5 cols) */}
-        <div className="lg:col-span-5 bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-6">
+        <div className="lg:col-span-5 glass-panel border border-surface-border rounded-lg p-6 flex flex-col gap-6 hover-lift delay-100">
           <div className="flex items-center gap-2 pb-3 border-b border-surface-border">
             <span className="material-symbols-outlined text-primary text-[20px]">tune</span>
             <h2 className="text-headline-md text-text-main font-bold">Scenario Builder</h2>
@@ -117,17 +117,17 @@ export const WhatIfLab: React.FC = () => {
         <div className="lg:col-span-7 flex flex-col gap-6">
           {/* Projected Metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-2">
+            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-2 hover-lift delay-100">
               <span className="text-label-sm uppercase text-text-secondary tracking-wider">Projected Water Loss</span>
               <span className="text-metric-display text-status-critical font-mono">{waterLoss.toLocaleString()} L</span>
               <span className="text-label-sm text-text-muted">Over {config.delayHours}h delay window</span>
             </div>
-            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-2">
+            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-2 hover-lift delay-200">
               <span className="text-label-sm uppercase text-text-secondary tracking-wider">Projected Financial Cost</span>
               <span className="text-metric-display text-status-warning font-mono">₹{Math.round(financialCost * productionMultiplier).toLocaleString()}</span>
               <span className="text-label-sm text-text-muted">Including tariff + penalty</span>
             </div>
-            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-2">
+            <div className="bg-surface-card border border-surface-border rounded-lg p-6 flex flex-col gap-2 hover-lift delay-300">
               <span className="text-label-sm uppercase text-text-secondary tracking-wider">Infrastructure Risk</span>
               <span className={`text-metric-display font-bold ${infraColor}`}>{infraRisk}</span>
               <span className="text-label-sm text-text-muted">Foundation erosion risk</span>
@@ -135,7 +135,7 @@ export const WhatIfLab: React.FC = () => {
           </div>
 
           {/* Comparison Table */}
-          <div className="bg-surface-card border border-surface-border rounded-lg p-6">
+          <div className="glass-panel border border-surface-border rounded-lg p-6 hover-lift delay-300">
             <div className="flex items-center gap-2 pb-3 border-b border-surface-border mb-4">
               <span className="material-symbols-outlined text-primary text-[18px]">compare_arrows</span>
               <h3 className="text-headline-md text-text-main font-bold">Baseline vs Scenario Comparison</h3>
@@ -182,7 +182,7 @@ export const WhatIfLab: React.FC = () => {
 
           {/* AI Insight */}
           {hasRun && (
-            <div className="bg-surface-card border border-primary/40 rounded-lg p-5 flex items-start gap-4">
+            <div className="glass-panel border border-primary/40 rounded-lg p-5 flex items-start gap-4 animate-fade-in">
               <div className="w-10 h-10 rounded bg-primary/10 border border-primary/30 flex items-center justify-center text-primary shrink-0">
                 <span className="material-symbols-outlined text-[22px]">auto_awesome</span>
               </div>

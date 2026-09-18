@@ -54,7 +54,7 @@ export const DigitalTwinPage: React.FC = () => {
       {/* Twin + Inspector */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 min-h-0">
         {/* SVG Twin */}
-        <div className="lg:col-span-8 bg-surface-card border border-surface-border rounded-lg p-5 flex items-center justify-center min-h-[500px]">
+        <div className="lg:col-span-8 glass-panel border border-surface-border rounded-lg p-5 flex items-center justify-center min-h-[500px] hover-lift delay-100 shadow-[inset_0_0_50px_rgba(40,215,255,0.03)]">
           <svg className="w-full h-full max-h-[500px]" viewBox="0 0 860 420">
             <defs>
               <linearGradient id="tankGrad2" x1="0" x2="0" y1="1" y2="0">
@@ -157,7 +157,7 @@ export const DigitalTwinPage: React.FC = () => {
         </div>
 
         {/* Inspector Panel */}
-        <div className="lg:col-span-4 bg-surface-subtle border border-surface-border rounded-lg p-6 flex flex-col">
+        <div className="lg:col-span-4 glass-panel border border-surface-border rounded-lg p-6 flex flex-col hover-lift delay-200">
           <div className="flex items-center gap-2 pb-3 border-b border-surface-border mb-4">
             <span className="material-symbols-outlined text-primary text-[20px]">info</span>
             <h3 className="text-headline-md font-bold text-text-main">Node Inspector</h3>
