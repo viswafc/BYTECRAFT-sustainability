@@ -40,7 +40,68 @@ AquaRisk AI introduces a full 11-stage intelligence pipeline:
 
 ---
 
-## 🏗 Architecture
+## 🏗 Architecture Design
+
+```text
+                 ┌─────────────────────┐
+                 │   INDUSTRIAL PLANT  │
+                 │                     │
+                 │ Flow Sensors        │
+                 │ Pressure Sensors    │
+                 │ Tank Level Sensors  │
+                 │ RPM Sensors         │
+                 │ Vibration Sensors   │
+                 │ Valve Sensors       │
+                 │ Production Status   │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │ EDGE DATA LAYER     │
+                 │ ESP32 / PLC /       │
+                 │ Industrial Gateway  │
+                 └──────────┬──────────┘
+                            │
+                       MQTT / HTTP
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │ DATA INGESTION      │
+                 │ Real-Time Telemetry │
+                 │ Historical Data     │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │ INTELLIGENCE ENGINE │
+                 │                     │
+                 │ Baseline Modeling   │
+                 │ Anomaly Detection   │
+                 │ Sensor Fusion       │
+                 │ Diagnosis           │
+                 │ Localization        │
+                 │ Risk Prediction     │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │ DECISION ENGINE     │
+                 │                     │
+                 │ Water Loss          │
+                 │ Financial Impact    │
+                 │ Recommendations     │
+                 │ What-if Simulation  │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+          ┌──────────────────────────────────┐
+          │       AQUARISK AI DASHBOARD      │
+          │                                  │
+          │ 3D Plant │ Sensors │ Alerts      │
+          │ Analytics│ Risk    │ AI Copilot  │
+          └──────────────────────────────────┘ 
+```
+
 - **Frontend**: React + TypeScript + Vite + Custom SVG Digital Twin.
 - **Backend**: FastAPI (Python) + SQLAlchemy. *(Includes alternative Node.js/Express bootstrap support)*
 - **Database**: Native MySQL (via local XAMPP) / SQLite fallback.
