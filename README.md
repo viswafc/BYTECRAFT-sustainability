@@ -8,6 +8,8 @@
 **AquaRisk AI** is an industrial water-risk intelligence platform that goes beyond static leak detection. It analyzes live telemetry (water flow, pressure, production context, and historical behavior) to distinguish abnormal production changes from probable leaks, locate affected network segments, estimate severity and water loss, predict escalation, quantify financial impact, explain its decisions, and simulate the consequences of different operator responses.
 
 View your app in AI Studio: https://ai.studio/apps/a134d185-5f12-4dde-b3a4-902c833dc9bc
+
+**Project Presentation:** [View on Prezi](https://prezi.com/craft/room/5k22kcUJCVDviUYJkKiTfp?referral_token=rXpG-GlnB3FN)
 ---
 
 ## 🎯 The Problem (SU-03)
