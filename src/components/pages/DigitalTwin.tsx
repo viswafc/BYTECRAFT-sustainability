@@ -3,6 +3,8 @@ import { useTelemetry } from '../../context/TelemetryContext';
 import { DigitalTwinNode, PageId, PlantId } from '../../types';
 import { Plant01Topology } from '../plants/Plant01Topology';
 import { Plant02Topology } from '../plants/Plant02Topology';
+import { Plant03Topology } from '../plants/Plant03Topology';
+import { Plant04Topology } from '../plants/Plant04Topology';
 import { 
   Workflow, 
   Droplet, 
@@ -234,6 +236,24 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({ onNavigate }) => {
                   showPressureHeatmap={showPressureHeatmap}
                 />
               )}
+
+              {currentPlantId === 'plant-03' && (
+                <Plant03Topology
+                  nodes={digitalTwinNodes}
+                  selectedNodeId={selectedNodeId}
+                  onSelectNode={setSelectedTwinNodeId}
+                  showPressureHeatmap={showPressureHeatmap}
+                />
+              )}
+
+              {currentPlantId === 'plant-04' && (
+                <Plant04Topology
+                  nodes={digitalTwinNodes}
+                  selectedNodeId={selectedNodeId}
+                  onSelectNode={setSelectedTwinNodeId}
+                  showPressureHeatmap={showPressureHeatmap}
+                />
+              )}
             </div>
           </div>
 
@@ -274,6 +294,40 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({ onNavigate }) => {
                     className="px-2.5 py-1 rounded-lg bg-[#28D7FF]/20 text-[#28D7FF] border border-[#28D7FF]/40 font-mono hover:bg-[#28D7FF] hover:text-[#040F16] transition-colors cursor-pointer"
                   >
                     Focus Bypass BV-202
+                  </button>
+                </>
+              )}
+
+              {currentPlantId === 'plant-03' && (
+                <>
+                  <button
+                    onClick={() => setSelectedTwinNodeId('NODE-P3-RO-RACK2')}
+                    className="px-2.5 py-1 rounded-lg bg-[#FF5B67]/20 text-[#FF5B67] border border-[#FF5B67]/40 font-mono hover:bg-[#FF5B67] hover:text-white transition-colors cursor-pointer"
+                  >
+                    Focus RO Rack-02 Leak
+                  </button>
+                  <button
+                    onClick={() => setSelectedTwinNodeId('NODE-P3-HP-PUMP')}
+                    className="px-2.5 py-1 rounded-lg bg-[#28D7FF]/20 text-[#28D7FF] border border-[#28D7FF]/40 font-mono hover:bg-[#28D7FF] hover:text-[#040F16] transition-colors cursor-pointer"
+                  >
+                    Focus HP Pump P-302
+                  </button>
+                </>
+              )}
+
+              {currentPlantId === 'plant-04' && (
+                <>
+                  <button
+                    onClick={() => setSelectedTwinNodeId('NODE-P4-WFI-TANK')}
+                    className="px-2.5 py-1 rounded-lg bg-[#fcbf49]/20 text-[#fcbf49] border border-[#fcbf49]/40 font-mono hover:bg-[#fcbf49] hover:text-black transition-colors cursor-pointer"
+                  >
+                    Focus 85°C WFI Tank
+                  </button>
+                  <button
+                    onClick={() => setSelectedTwinNodeId('NODE-P4-DISTILLATION')}
+                    className="px-2.5 py-1 rounded-lg bg-[#28D7FF]/20 text-[#28D7FF] border border-[#28D7FF]/40 font-mono hover:bg-[#28D7FF] hover:text-[#040F16] transition-colors cursor-pointer"
+                  >
+                    Focus Still MEDS-401
                   </button>
                 </>
               )}
@@ -473,6 +527,38 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({ onNavigate }) => {
                   >
                     RAMP BYPASS BV-202 TO 85%
                   </button>
+                </div>
+              )}
+
+              {/* Plant 03 Special Diagnostics Card for RO Rack 02 */}
+              {currentPlantId === 'plant-03' && selectedNode.id === 'NODE-P3-RO-RACK2' && (
+                <div className="p-3.5 rounded-xl border border-[#FF5B67]/50 bg-[#250d14] text-xs space-y-2 text-gray-200">
+                  <div className="flex items-center space-x-1.5 font-bold font-mono text-[#FF5B67]">
+                    <ShieldAlert className="w-4 h-4" />
+                    <span>MEMBRANE O-RING SEAL DISPLACEMENT</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300">
+                    High pressure 9.5 Bar feed caused inter-element coupling O-ring dislocation. Permeate conductivity degrading. Ultrasonic sensor recording 62.8 dB acoustic emissions.
+                  </p>
+                  <button
+                    onClick={() => toggleValveState('NODE-P3-RO-RACK2', 0)}
+                    className="w-full py-2 rounded-lg font-bold text-xs bg-[#FF5B67] hover:bg-[#ff6e78] text-white font-mono transition-colors cursor-pointer"
+                  >
+                    ISOLATE RACK-02 FEED MANIFOLD
+                  </button>
+                </div>
+              )}
+
+              {/* Plant 04 Special Diagnostics Card for WFI Tank */}
+              {currentPlantId === 'plant-04' && selectedNode.id === 'NODE-P4-WFI-TANK' && (
+                <div className="p-3.5 rounded-xl border border-[#31d48c]/50 bg-[#0b251d] text-xs space-y-2 text-gray-200">
+                  <div className="flex items-center space-x-1.5 font-bold font-mono text-[#31d48c]">
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>85.4°C CONTINUOUS THERMAL SANITIZATION</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300">
+                    WFI storage and sanitary recirculation loop is operating in continuous self-sanitizing heat. Zero deadleg verified at all points of use. TOC: 6.2 ppb (Limit &lt; 10 ppb).
+                  </p>
                 </div>
               )}
             </div>

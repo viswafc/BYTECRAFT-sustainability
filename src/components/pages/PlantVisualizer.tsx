@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTelemetry } from '../../context/TelemetryContext';
 import { PageId, VisualizerLayer, PlantId, PlantInfo } from '../../types';
-import { Plant02Visualizer } from '../plants/Plant02Visualizer';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Building2, 
@@ -17,22 +16,18 @@ import {
   AlertTriangle, 
   CheckCircle2, 
   ChevronDown, 
-  ChevronUp, 
-  Minus, 
   Bell, 
   ArrowRight, 
   ShieldCheck, 
   Sparkles, 
-  Wind, 
-  X, 
-  RefreshCw, 
-  Power, 
-  RotateCcw, 
-  Zap, 
-  ZoomIn, 
-  ZoomOut,
-  Wrench,
-  Crosshair
+  Wind,
+  X,
+  RefreshCw,
+  Power,
+  RotateCcw,
+  Zap,
+  ZoomIn,
+  ZoomOut
 } from 'lucide-react';
 
 interface PlantVisualizerProps {
@@ -50,9 +45,6 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
     currentPlantId, 
     setCurrentPlantId, 
     plants,
-    digitalTwinNodes,
-    selectedTwinNodeId,
-    setSelectedTwinNodeId,
     isV104Isolated,
     isolateLineB,
     emergencyTriggered,
@@ -68,10 +60,6 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
   
   // Plant Selector Dropdown open state
   const [plantDropdownOpen, setPlantDropdownOpen] = useState<boolean>(false);
-
-  // Minimized states for floating boxes to prevent screen clutter and overlap
-  const [isAlertsMinimized, setIsAlertsMinimized] = useState<boolean>(true);
-  const [isPlantHealthMinimized, setIsPlantHealthMinimized] = useState<boolean>(false);
 
   // Production Status override state
   const [productionState, setProductionState] = useState<'RUNNING' | 'MAINTENANCE' | 'IDLE' | 'PEAK'>('RUNNING');
@@ -103,33 +91,6 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
     }
   }, [isPipelineAutoStopped, leakSimulationMode]);
 
-  // Interactive Pipeline Repair Demo State (Plant 1)
-  const [repairingPipeline, setRepairingPipeline] = useState<boolean>(false);
-  const [repairProgressText, setRepairProgressText] = useState<string>('');
-
-  const handleFixPipeline = async () => {
-    setRepairingPipeline(true);
-    setRepairProgressText('Deploying pneumatic composite sleeve clamp...');
-    await new Promise(r => setTimeout(r, 600));
-    setRepairProgressText('Torquing high-tensile clamp bolts to 180 Nm...');
-    await new Promise(r => setTimeout(r, 600));
-    setRepairProgressText('Conducting hydrostatic pressure seal test (4.6 bar)...');
-    await new Promise(r => setTimeout(r, 600));
-    setRepairProgressText('Flange sealed! Restoring nominal fluid flow...');
-    await new Promise(r => setTimeout(r, 400));
-    await setLeakSimulationMode('resolved');
-    setDemoLeakActive(false);
-    setValve01Aperture(100);
-    setRepairingPipeline(false);
-    setRepairProgressText('');
-  };
-
-  const handleRetriggerDemoDefect = () => {
-    setLeakSimulationMode('critical_blowout');
-    setDemoLeakActive(true);
-    setValve01Aperture(40);
-  };
-
   // Selected sensor for detailed inspector modal
   const [selectedSensorPin, setSelectedSensorPin] = useState<string | null>(null);
 
@@ -143,28 +104,21 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
   const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
-  // Reset zoom, pan, and selection whenever plant is changed
-  useEffect(() => {
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
-    setSelectedSensorPin(null);
-  }, [currentPlantId]);
-
-  // Direct mouse wheel scroll to zoom in and zoom out across all plants
+  // Zoom in and out with mouse scroll wheel while holding Ctrl / Cmd
   useEffect(() => {
     const el = mapContainerRef.current;
     if (!el) return;
 
     const onWheel = (e: WheelEvent) => {
-      // If target is inside a scrollable drawer or list, don't zoom map
-      if ((e.target as HTMLElement).closest('.overflow-y-auto')) return;
-      e.preventDefault();
-      const delta = e.deltaY;
-      setZoom((prev) => {
-        const factor = delta < 0 ? 1.08 : 0.92;
-        const next = Math.min(Math.max(prev * factor, 0.4), 3.5);
-        return Math.round(next * 100) / 100;
-      });
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const delta = e.deltaY;
+        setZoom((prev) => {
+          const factor = delta < 0 ? 1.12 : 0.88;
+          const next = Math.min(Math.max(prev * factor, 0.4), 3.5);
+          return Math.round(next * 100) / 100;
+        });
+      }
     };
 
     el.addEventListener('wheel', onWheel, { passive: false });
@@ -405,180 +359,172 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
       {/* ========================================================================= */}
       {/* 1. TOP TITLE ROW & CENTER FLOATING PRODUCTION STATUS BADGE               */}
       {/* ========================================================================= */}
-      <div className="absolute top-4 left-6 right-6 z-30 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pointer-events-none">
+      <div className="absolute top-5 left-6 right-6 z-30 flex items-start justify-between pointer-events-none">
         
-        {/* Left Title with Dynamic Active Plant Info */}
-        <div className="pointer-events-auto bg-[#070e17]/80 backdrop-blur-sm p-2 rounded-2xl border border-transparent">
-          <div className="flex items-center space-x-2.5">
-            <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight text-white font-['Outfit',sans-serif]">
-              {currentPlant?.name || 'Industrial Plant'}
-            </h1>
-            <span className="px-2 py-0.5 text-[10px] font-mono font-bold rounded-full bg-[#ff4d6d]/20 text-[#ff4d6d] border border-[#ff4d6d]/40">
-              {currentPlant?.code || 'PLANT-01'}
-            </span>
-          </div>
-          <p className="text-xs text-[#879ea9] mt-0.5 font-medium tracking-wide">
-            {currentPlant?.location || 'Industrial Area'} • Real-time Digital Twin SCADA
+        {/* Left Title */}
+        <div className="pointer-events-auto">
+          <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-white font-['Outfit',sans-serif]">
+            Plant <span className="text-[#ff4d6d]">Visualizer</span>
+          </h1>
+          <p className="text-xs text-[#879ea9] mt-1 font-medium tracking-wide">
+            Real-time monitoring of sensors across the industrial water network
           </p>
         </div>
 
-        {/* Center Plant Quick Switch Bar */}
-        <div className="pointer-events-auto flex items-center p-1 rounded-2xl bg-[#0b1622]/90 backdrop-blur-md border border-[#1b344a] shadow-xl">
-          {plants.map((plant: PlantInfo) => {
-            const isSelected = currentPlantId === plant.id;
-            return (
-              <button
-                key={plant.id}
-                onClick={() => setCurrentPlantId(plant.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 ${
-                  isSelected
-                    ? 'bg-[#ff4d6d] text-white shadow-lg shadow-[#ff4d6d]/40'
-                    : 'text-[#829db0] hover:text-white hover:bg-[#152a3d]'
-                }`}
-              >
-                <span>{plant.shortName}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Right Section: Minimizable Plant Health & Quick Status Badge */}
-        <div className="pointer-events-auto flex items-center space-x-2 self-end md:self-auto">
+        {/* Center Floating Production Status & Demo Leak Switch */}
+        <div className="pointer-events-auto flex items-center space-x-3">
           {/* Production Status Badge */}
-          <div className={`flex items-center backdrop-blur-md border px-3 py-1.5 rounded-2xl shadow-xl space-x-2.5 ${
+          <div className={`flex items-center backdrop-blur-md border px-4 py-2 rounded-2xl shadow-xl space-x-3 ${
             isLeakActive 
               ? 'bg-[#1a070c]/90 border-[#ff4d6d]/60 shadow-rose-950/50' 
               : 'bg-[#0d1824]/90 border-[#1d354b] shadow-black/40'
           }`}>
-            <div className={`w-7 h-7 rounded-xl border flex items-center justify-center ${
+            <div className={`w-8 h-8 rounded-xl border flex items-center justify-center ${
               isLeakActive 
                 ? 'bg-[#ff4d6d]/20 border-[#ff4d6d] text-[#ff4d6d]' 
                 : 'bg-[#00e5ff]/20 border-[#00e5ff]/40 text-[#00e5ff]'
             }`}>
-              {isLeakActive ? <AlertTriangle className="w-3.5 h-3.5 animate-bounce" /> : <Building2 className="w-3.5 h-3.5" />}
+              {isLeakActive ? <AlertTriangle className="w-4 h-4 animate-bounce" /> : <Building2 className="w-4 h-4" />}
             </div>
             <div>
-              <div className="flex items-center space-x-1.5">
-                <span className="text-xs font-black text-white tracking-wider font-['Outfit',sans-serif]">
+              <div className="text-[10px] uppercase font-bold tracking-wider text-[#738c9e]">Production Status</div>
+              <div className="flex items-center space-x-2 mt-0.5">
+                <span className="text-sm font-black text-white tracking-wider font-['Outfit',sans-serif]">
                   {isLeakActive ? 'LEAK ALERT' : productionState}
                 </span>
-                <span className={`w-2 h-2 rounded-full ${
-                  isLeakActive ? 'bg-[#ff4d6d] animate-ping' : 'bg-[#10b981] animate-pulse'
+                <span className={`w-2.5 h-2.5 rounded-full shadow-lg ${
+                  isLeakActive ? 'bg-[#ff4d6d] shadow-[#ff4d6d]/80 animate-ping' : 'bg-[#10b981] shadow-[#10b981]/80 animate-pulse'
                 }`} />
               </div>
-              <div className="text-[10px] text-[#8aa3b5] font-medium font-mono">
-                {isLeakActive ? '480 L/h Bleed' : `${loadPercentage}% Load`}
+              <div className="text-[11px] text-[#8aa3b5] font-medium">
+                {isLeakActive ? 'S-05 Pipe Rupture • 480 L/h Bleed' : `${loadPercentage} % Load`}
               </div>
             </div>
           </div>
 
-          {/* TOP RIGHT MINIMIZABLE PLANT HEALTH CARD */}
-          {isPlantHealthMinimized ? (
-            <button
-              onClick={() => setIsPlantHealthMinimized(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-[#0b1622]/90 hover:bg-[#132637] backdrop-blur-md border border-[#1b344a] shadow-xl text-xs text-white transition-all cursor-pointer group"
-              title="Expand Plant Health"
-            >
-              <div className={`w-2 h-2 rounded-full ${isLeakActive ? 'bg-[#ff4d6d] animate-ping' : 'bg-[#10b981] animate-pulse'}`} />
-              <span className="font-bold text-gray-200 group-hover:text-white font-['Outfit',sans-serif]">Health</span>
-              <span className={`font-mono font-bold ${isLeakActive ? 'text-[#ff4d6d]' : 'text-[#00e5ff]'}`}>
+          {/* Interactive Demo Leak Toggle Button for Presentations */}
+          <button
+            onClick={() => {
+              if (isLeakActive) {
+                isolateLineB(true);
+                setValve01Aperture(0);
+              } else {
+                setDemoLeakActive(true);
+                isolateLineB(false);
+                setValve01Aperture(40);
+              }
+            }}
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-2xl border text-xs font-bold transition-all shadow-xl cursor-pointer ${
+              isLeakActive
+                ? 'bg-[#ff4d6d]/20 border-[#ff4d6d] text-rose-300 hover:bg-[#ff4d6d]/30'
+                : isV104Isolated
+                ? 'bg-emerald-500/20 border-emerald-500/60 text-emerald-300 hover:bg-emerald-500/30'
+                : 'bg-[#0d1824]/90 border-[#1d354b] text-gray-300 hover:border-[#ff4d6d]'
+            }`}
+          >
+            <span className={`w-2.5 h-2.5 rounded-full ${isLeakActive ? 'bg-[#ff4d6d] animate-ping' : isV104Isolated ? 'bg-[#10b981]' : 'bg-gray-400'}`} />
+            <span>
+              {isLeakActive 
+                ? '🚨 Demo Leak: ACTIVE (Click to Isolate)' 
+                : isV104Isolated 
+                ? '✅ Leak Isolated (Click to Re-trigger)' 
+                : '💧 Trigger Demo Leak'}
+            </span>
+          </button>
+        </div>
+
+        {/* TOP RIGHT COMPACT PLANT HEALTH CARD */}
+        <div className="pointer-events-auto w-60 p-3 rounded-2xl bg-[#0b1622]/95 backdrop-blur-md border border-[#1b344a] shadow-2xl">
+          <div className="flex items-center justify-between pb-1.5 border-b border-[#162d40]">
+            <h2 className="text-xs font-bold text-white font-['Outfit',sans-serif] tracking-wide">
+              Plant Health
+            </h2>
+            <div className={`flex items-center space-x-1 text-[9px] font-semibold ${
+              isLeakActive ? 'text-[#ff4d6d]' : 'text-[#10b981]'
+            }`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${
+                isLeakActive ? 'bg-[#ff4d6d] animate-ping' : 'bg-[#10b981] animate-pulse'
+              }`} />
+              <span>{isLeakActive ? 'Alert (Degraded)' : 'Operational'}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-3 my-2">
+            {/* Compact Radial Progress Gauge (82% when leak active, else 98%) */}
+            <div className="relative w-14 h-14 shrink-0 flex items-center justify-center">
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" stroke="#122739" strokeWidth="9" fill="none" />
+                <circle 
+                  cx="50" 
+                  cy="50" 
+                  r="40" 
+                  stroke={isLeakActive ? '#ff4d6d' : '#00e5ff'} 
+                  strokeWidth="9" 
+                  strokeDasharray="251.2" 
+                  strokeDashoffset={isLeakActive ? '45' : '5'} 
+                  strokeLinecap="round" 
+                  fill="none" 
+                  className={`filter ${isLeakActive ? 'drop-shadow-[0_0_8px_#ff4d6d]' : 'drop-shadow-[0_0_6px_#00e5ff]'}`}
+                />
+              </svg>
+              <span className="absolute text-sm font-black text-white font-['Outfit',sans-serif]">
                 {isLeakActive ? '82%' : '98%'}
               </span>
-              <ChevronDown className="w-3 h-3 text-[#7893a6] group-hover:text-white" />
-            </button>
-          ) : (
-            <div className="w-56 p-2.5 rounded-2xl bg-[#0b1622]/95 backdrop-blur-md border border-[#1b344a] shadow-2xl">
-              <div className="flex items-center justify-between pb-1 border-b border-[#162d40]">
-                <div className="flex items-center space-x-1.5">
-                  <h2 className="text-xs font-bold text-white font-['Outfit',sans-serif]">
-                    Plant Health
-                  </h2>
-                  <span className={`w-1.5 h-1.5 rounded-full ${
-                    isLeakActive ? 'bg-[#ff4d6d] animate-ping' : 'bg-[#10b981] animate-pulse'
-                  }`} />
-                </div>
-                <div className="flex items-center space-x-1">
-                  <span className={`text-[9px] font-semibold ${isLeakActive ? 'text-[#ff4d6d]' : 'text-[#10b981]'}`}>
-                    {isLeakActive ? 'Alert' : 'Nominal'}
-                  </span>
-                  <button
-                    onClick={() => setIsPlantHealthMinimized(true)}
-                    className="p-1 rounded-md text-[#7893a6] hover:text-white hover:bg-[#162d40] transition-colors cursor-pointer ml-1"
-                    title="Minimize Plant Health"
-                  >
-                    <Minus className="w-3 h-3" />
-                  </button>
-                </div>
+            </div>
+
+            {/* Quick Flow Rates */}
+            <div className="flex-1 space-y-1 text-[10px]">
+              <div className="flex items-center justify-between">
+                <span className="text-[#7f99ab]">Flow In:</span>
+                <span className="font-mono font-bold text-[#10b981]">{calculatedFlowIn.toLocaleString()} L/h</span>
               </div>
-
-              <div className="flex items-center space-x-2.5 my-1.5">
-                <div className="relative w-11 h-11 shrink-0 flex items-center justify-center">
-                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" stroke="#122739" strokeWidth="10" fill="none" />
-                    <circle 
-                      cx="50" 
-                      cy="50" 
-                      r="40" 
-                      stroke={isLeakActive ? '#ff4d6d' : '#00e5ff'} 
-                      strokeWidth="10" 
-                      strokeDasharray="251.2" 
-                      strokeDashoffset={isLeakActive ? '45' : '5'} 
-                      strokeLinecap="round" 
-                      fill="none" 
-                    />
-                  </svg>
-                  <span className="absolute text-xs font-black text-white font-['Outfit',sans-serif]">
-                    {isLeakActive ? '82%' : '98%'}
-                  </span>
-                </div>
-
-                <div className="flex-1 space-y-0.5 text-[9px]">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#7f99ab]">Flow In:</span>
-                    <span className="font-mono font-bold text-[#10b981]">{calculatedFlowIn.toLocaleString()} L/h</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#7f99ab]">Flow Out:</span>
-                    <span className="font-mono font-bold text-[#10b981]">{calculatedFlowOut.toLocaleString()} L/h</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#7f99ab]">{isLeakActive ? 'Loss:' : 'Press:'}</span>
-                    <span className={`font-mono font-bold ${isLeakActive ? 'text-[#ff4d6d]' : 'text-[#00e5ff]'}`}>
-                      {isLeakActive ? '-480 L/h' : `${calculatedPressure} bar`}
-                    </span>
-                  </div>
-                </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#7f99ab]">Flow Out:</span>
+                <span className="font-mono font-bold text-[#10b981]">{calculatedFlowOut.toLocaleString()} L/h</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#7f99ab]">{isLeakActive ? 'Bleed Loss:' : 'Pressure:'}</span>
+                <span className={`font-mono font-bold ${isLeakActive ? 'text-[#ff4d6d]' : 'text-[#00e5ff]'}`}>
+                  {isLeakActive ? '-480 L/h' : `${calculatedPressure} bar`}
+                </span>
               </div>
             </div>
-          )}
+          </div>
+
+          <div className="pt-1.5 border-t border-[#162d40] flex items-center justify-between text-[10px] text-[#7f99ab]">
+            <span>Tank: <strong className="text-[#00e5ff] font-mono">78%</strong></span>
+            <div className="flex items-center space-x-1">
+              <span>Incidents:</span>
+              <strong className={`font-mono ${isLeakActive ? 'text-[#ff4d6d]' : 'text-white'}`}>
+                {isLeakActive ? '1 Active' : '0'}
+              </strong>
+              {isLeakActive && <span className="w-1.5 h-1.5 rounded-full bg-[#ff4d6d] animate-ping" />}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ========================================================================= */}
       {/* 2. LEFT FLOATING CONTROLS & MODE SELECTOR                                */}
       {/* ========================================================================= */}
-      <div className="absolute top-24 left-6 z-30 flex flex-col space-y-2.5 pointer-events-auto w-48">
+      <div className="absolute top-24 left-6 z-30 flex flex-col space-y-3 pointer-events-auto w-48">
         
         {/* Plant Selector Dropdown Card */}
         <div className="relative">
           <div 
             onClick={() => setPlantDropdownOpen(!plantDropdownOpen)}
-            className="flex items-center justify-between p-2.5 rounded-2xl bg-[#0d1824]/90 backdrop-blur-md border border-[#1e364c] hover:border-[#ff4d6d] cursor-pointer transition-all shadow-xl"
+            className="flex items-center justify-between p-3 rounded-2xl bg-[#0d1824]/90 backdrop-blur-md border border-[#1e364c] hover:border-[#ff4d6d] cursor-pointer transition-all shadow-xl"
           >
-            <div className="flex items-center space-x-2.5 min-w-0">
-              <div className="w-7 h-7 rounded-lg bg-[#ff4d6d]/20 border border-[#ff4d6d]/40 flex items-center justify-center text-[#ff4d6d] shrink-0">
+            <div className="flex items-center space-x-2.5">
+              <div className="w-7 h-7 rounded-lg bg-[#ff4d6d]/20 border border-[#ff4d6d]/40 flex items-center justify-center text-[#ff4d6d]">
                 <Building2 className="w-3.5 h-3.5" />
               </div>
-              <div className="truncate">
-                <div className="text-xs font-bold text-white leading-tight truncate">
-                  {currentPlant?.shortName || currentPlant?.name || 'Plant 1'}
-                </div>
-                <div className="text-[10px] text-[#7893a6] leading-tight truncate">
-                  {currentPlant?.facilityType || 'Production Unit'}
-                </div>
+              <div>
+                <div className="text-xs font-bold text-white leading-tight">Plant 1</div>
+                <div className="text-[10px] text-[#7893a6] leading-tight">Production Unit</div>
               </div>
             </div>
-            <ChevronDown className={`w-3.5 h-3.5 text-[#7893a6] shrink-0 transition-transform ${plantDropdownOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`w-3.5 h-3.5 text-[#7893a6] transition-transform ${plantDropdownOpen ? 'rotate-180' : ''}`} />
           </div>
 
           {/* Plant Dropdown Menu */}
@@ -588,7 +534,7 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
-                className="absolute left-0 right-0 mt-1.5 bg-[#0d1824] border border-[#233d54] rounded-2xl shadow-2xl p-1.5 z-40 space-y-1"
+                className="absolute left-0 right-0 mt-1.5 bg-[#0d1824] border border-[#233d54] rounded-2xl shadow-2xl p-2 z-40 space-y-1"
               >
                 {plants.map((plant: PlantInfo) => (
                   <button
@@ -604,7 +550,7 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
                     }`}
                   >
                     <span>{plant.shortName}</span>
-                    <span className="text-[10px] opacity-80 font-mono">{plant.code}</span>
+                    <span className="text-[10px] opacity-80">{plant.code}</span>
                   </button>
                 ))}
               </motion.div>
@@ -1015,97 +961,61 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. BOTTOM LEFT "LIVE ALERTS" FLOATING CARD (MINIMIZED COMPACT FOOTPRINT)   */}
+      {/* 3. BOTTOM LEFT "LIVE ALERTS" FLOATING CARD                                */}
       {/* ========================================================================= */}
-      {isAlertsMinimized ? (
-        <div className="absolute bottom-4 left-4 z-30 pointer-events-auto">
-          <button
-            onClick={() => setIsAlertsMinimized(false)}
-            className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-[#0b1622]/90 hover:bg-[#122332] backdrop-blur-md border border-[#1a3348] shadow-lg text-white transition-all cursor-pointer group"
-            title="Expand Live Alerts"
-            aria-label="Expand Live Alerts"
-          >
-            <div className="w-4 h-4 rounded-md bg-[#ff4d6d]/20 flex items-center justify-center text-[#ff4d6d]">
-              <Bell className="w-2.5 h-2.5" />
+      <div className="absolute bottom-6 left-6 z-30 pointer-events-auto w-[420px] max-w-[calc(100vw-3rem)]">
+        <div className="p-4 rounded-3xl bg-[#0b1622]/90 backdrop-blur-md border border-[#1a3348] shadow-2xl">
+          {/* Header */}
+          <div className="flex items-center justify-between pb-2.5 border-b border-[#182e42]">
+            <div className="flex items-center space-x-2">
+              <div className="w-6 h-6 rounded-lg bg-[#ff4d6d]/20 flex items-center justify-center text-[#ff4d6d]">
+                <Bell className="w-3.5 h-3.5" />
+              </div>
+              <span className="text-xs font-bold text-white tracking-wide font-['Outfit',sans-serif]">Live Alerts</span>
             </div>
-            <span className="text-[10px] font-bold text-gray-200 group-hover:text-white font-['Outfit',sans-serif]">Live Alerts</span>
-            <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#ff4d6d]/20 text-[#ff4d6d] font-mono font-bold">
-              {alertsList.length}
-            </span>
-            <ChevronUp className="w-3 h-3 text-[#7893a6] group-hover:text-white ml-0.5" />
-          </button>
-        </div>
-      ) : (
-        <div className="absolute bottom-4 left-4 z-30 pointer-events-auto w-[280px] sm:w-[310px] max-w-[calc(100vw-2rem)]">
-          <div className="p-2.5 rounded-2xl bg-[#0b1622]/95 backdrop-blur-md border border-[#1a3348] shadow-xl">
-            {/* Header */}
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#182e42]/80">
-              <div className="flex items-center space-x-1.5">
-                <div className="w-5 h-5 rounded-md bg-[#ff4d6d]/20 flex items-center justify-center text-[#ff4d6d]">
-                  <Bell className="w-3 h-3" />
+            <button 
+              onClick={() => onNavigate('incidents')}
+              className="text-[11px] font-semibold text-[#8ca4b5] hover:text-[#ff4d6d] flex items-center space-x-1 transition-colors cursor-pointer"
+            >
+              <span>View All</span>
+              <ArrowRight className="w-3 h-3" />
+            </button>
+          </div>
+
+          {/* Alert List Rows */}
+          <div className="pt-2 space-y-2">
+            {alertsList.map((alert, idx) => (
+              <div 
+                key={idx}
+                onClick={() => onNavigate('incidents')}
+                className="flex items-center justify-between text-xs py-1 hover:bg-[#122332]/40 px-2 rounded-xl transition-colors cursor-pointer"
+              >
+                <div className="flex items-center space-x-2.5">
+                  <span className="text-[11px] font-mono text-[#7691a3] shrink-0">{alert.time}</span>
+                  <span className="text-gray-200 truncate max-w-[210px] text-[11px]">{alert.message}</span>
                 </div>
-                <span className="text-[11px] font-bold text-white tracking-wide font-['Outfit',sans-serif]">Live Alerts</span>
-                <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#ff4d6d]/15 text-[#ff4d6d] font-mono font-bold">
-                  {alertsList.length}
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${alert.color}`}>
+                  {alert.severity}
                 </span>
               </div>
-              <div className="flex items-center space-x-1">
-                <button 
-                  onClick={() => onNavigate('incidents')}
-                  className="text-[10px] font-semibold text-[#8ca4b5] hover:text-[#ff4d6d] flex items-center space-x-0.5 transition-colors cursor-pointer px-1 py-0.5"
-                >
-                  <span>View All</span>
-                  <ArrowRight className="w-2.5 h-2.5" />
-                </button>
-                <button
-                  onClick={() => setIsAlertsMinimized(true)}
-                  className="p-1 rounded-md text-[#7893a6] hover:text-white hover:bg-[#142839] transition-colors cursor-pointer"
-                  title="Minimize Live Alerts"
-                  aria-label="Minimize Live Alerts"
-                >
-                  <Minus className="w-3 h-3" />
-                </button>
-              </div>
-            </div>
-
-            {/* Alert List Rows */}
-            <div className="pt-1.5 space-y-1">
-              {alertsList.map((alert, idx) => (
-                <div 
-                  key={idx}
-                  onClick={() => onNavigate('incidents')}
-                  className="flex items-center justify-between text-[10px] py-1 hover:bg-[#122332]/60 px-1.5 rounded-lg transition-colors cursor-pointer gap-1.5"
-                >
-                  <div className="flex items-center space-x-1.5 min-w-0 flex-1">
-                    <span className="text-[9px] font-mono text-[#7691a3] shrink-0">{alert.time}</span>
-                    <span className="text-gray-200 truncate text-[10px]">{alert.message}</span>
-                  </div>
-                  <span className={`px-1.5 py-0.2 rounded-md text-[9px] font-bold border shrink-0 ${alert.color}`}>
-                    {alert.severity}
-                  </span>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
-      )}
+      </div>
 
       {/* ========================================================================= */}
       {/* 4. CENTER 3D INDUSTRIAL ISOMETRIC PLANT SCHEMATIC (INTERACTIVE SVG)       */}
       {/* ========================================================================= */}
-      {currentPlantId === 'plant-02' ? (
-        <Plant02Visualizer onNavigateIncident={() => onNavigate('incident-center')} />
-      ) : (
-        <div 
-          ref={mapContainerRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          className={`relative w-full h-full flex items-center justify-center overflow-hidden select-none ${
-            isDragging ? 'cursor-grabbing' : 'cursor-grab'
-          }`}
-        >
+      <div 
+        ref={mapContainerRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        className={`relative w-full h-full flex items-center justify-center overflow-hidden select-none ${
+          isDragging ? 'cursor-grabbing' : 'cursor-grab'
+        }`}
+      >
         
         {/* Isometric Grid Background Texture */}
         <div className="absolute inset-0 bg-[radial-gradient(#15293d_1px,transparent_1px)] [background-size:32px_32px] opacity-40 pointer-events-none" />
@@ -1709,120 +1619,81 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
           );
         })}
 
-        {/* Active Leak Interactive HUD Callout Pin (Defect Identification & Fix Demo) */}
+        {/* Active Leak Interactive HUD Callout Pin */}
         {isLeakActive && (activeLayer === '3d' || activeLayer === 'pipelines' || activeLayer === 'sensor-map' || activeLayer === 'zones') && (
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             className="absolute top-[64%] left-[58%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
           >
-            <div className="flex flex-col p-3 rounded-2xl bg-[#1a050b]/95 backdrop-blur-md border-2 border-[#ff1744] shadow-[0_0_35px_rgba(255,23,68,0.7)] text-white min-w-[280px]">
+            <div className="flex flex-col p-3 rounded-2xl bg-[#1a050b]/95 backdrop-blur-md border-2 border-[#ff1744] shadow-[0_0_35px_rgba(255,23,68,0.7)] text-white min-w-[230px]">
               <div className="flex items-center justify-between pb-1.5 border-b border-[#ff1744]/40">
                 <div className="flex items-center space-x-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#ff1744] animate-ping" />
                   <AlertTriangle className="w-4 h-4 text-[#ff1744] animate-bounce" />
                   <span className="text-xs font-black text-[#ff1744] tracking-wider uppercase font-['Outfit',sans-serif]">
-                    Defect Identified
+                    Critical Leak
                   </span>
                 </div>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#ff1744]/20 text-[#ff4d6d] font-bold">
-                  Station 142m
+                  Segment S-05
                 </span>
               </div>
 
               <div className="py-2 space-y-1 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="text-rose-200/70 text-[11px]">Identified Location:</span>
-                  <span className="font-mono font-bold text-white text-[11px]">Flange FLG-305B (Line B)</span>
+                  <span className="text-rose-200/70 text-[11px]">Loss Rate:</span>
+                  <span className="font-mono font-black text-rose-300">-480 L/h</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-rose-200/70 text-[11px]">Acoustic Sensor:</span>
-                  <span className="font-mono font-bold text-amber-300">SEN-AC-05 (58.4 kHz)</span>
+                  <span className="text-rose-200/70 text-[11px]">Pressure Drop:</span>
+                  <span className="font-mono font-bold text-amber-300">4.2 → 3.1 bar</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-rose-200/70 text-[11px]">Loss Rate / Drop:</span>
-                  <span className="font-mono font-bold text-rose-300">-480 L/h • 4.2 → 2.8 bar</span>
+                  <span className="text-rose-200/70 text-[11px]">AI Confidence:</span>
+                  <span className="font-mono font-bold text-[#00e5ff]">98.4%</span>
                 </div>
               </div>
 
-              {repairingPipeline ? (
-                <div className="p-2.5 rounded-xl bg-cyan-950/80 border border-cyan-500/50 text-center space-y-1.5 my-1">
-                  <div className="flex items-center justify-center space-x-2 text-cyan-300 text-xs font-bold">
-                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                    <span>Deploying Composite Seal...</span>
-                  </div>
-                  <p className="text-[10px] font-mono text-cyan-200">{repairProgressText}</p>
-                </div>
-              ) : (
-                <div className="space-y-1.5 pt-1">
-                  <button
-                    onClick={handleFixPipeline}
-                    className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-black text-xs font-black flex items-center justify-center space-x-1.5 shadow-lg shadow-emerald-500/30 transition-all cursor-pointer"
-                  >
-                    <Wrench className="w-3.5 h-3.5" />
-                    <span>Fix Pipeline Now (Deploy Seal Clamp)</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setValve01Aperture(0);
-                      isolateLineB(true);
-                    }}
-                    className="w-full py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#ff1744] to-[#d50000] hover:from-[#ff4569] hover:to-[#ff1744] text-white text-[11px] font-bold flex items-center justify-center space-x-1.5 cursor-pointer"
-                  >
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>⚡ SCADA Isolate Valve V-01</span>
-                  </button>
-                </div>
-              )}
+              <button
+                onClick={() => {
+                  setValve01Aperture(0);
+                  isolateLineB(true);
+                }}
+                className="w-full mt-1 py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#ff1744] to-[#d50000] hover:from-[#ff4569] hover:to-[#ff1744] text-white text-xs font-black flex items-center justify-center space-x-1.5 shadow-lg shadow-[#ff1744]/40 transition-all cursor-pointer"
+              >
+                <Zap className="w-3.5 h-3.5" />
+                <span>⚡ Isolate Valve V-01</span>
+              </button>
             </div>
           </motion.div>
         )}
 
-        {/* Repaired / Contained State HUD Pin */}
+        {/* Contained State HUD Pin */}
         {!isLeakActive && (activeLayer === '3d' || activeLayer === 'pipelines' || activeLayer === 'sensor-map' || activeLayer === 'zones') && (
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             className="absolute top-[68%] left-[58%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
           >
-            <div className="flex flex-col p-3 rounded-2xl bg-[#061e14]/95 backdrop-blur-md border border-[#10b981] shadow-lg text-white space-y-2 min-w-[260px]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
-                  <span className="text-xs font-bold text-[#34d399]">Pipeline Repaired & Sealed</span>
-                </div>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">
-                  Station 142m
-                </span>
-              </div>
-              <p className="text-[10px] text-gray-300 font-mono">
-                Composite sleeve clamp installed • 4.4 bar nominal pressure restored • Zero bleed.
-              </p>
-              <div className="flex items-center space-x-2 pt-1">
-                <button
-                  onClick={handleRetriggerDemoDefect}
-                  className="flex-1 py-1.5 px-2 rounded-xl bg-[#133827] hover:bg-[#1a4a35] text-emerald-200 text-[10px] font-bold flex items-center justify-center space-x-1.5 cursor-pointer border border-emerald-500/30"
-                >
-                  <RotateCcw className="w-3 h-3" />
-                  <span>Re-trigger Defect Demo</span>
-                </button>
-                <button
-                  onClick={() => {
-                    setValve01Aperture(40);
-                    isolateLineB(false);
-                  }}
-                  className="text-[10px] text-gray-300 hover:text-white bg-[#0e271b] px-2 py-1.5 rounded-xl cursor-pointer hover:bg-[#153a29]"
-                >
-                  Reset SCADA
-                </button>
-              </div>
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-[#061e14]/95 backdrop-blur-md border border-[#10b981] shadow-lg text-white">
+              <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
+              <span className="text-xs font-bold text-[#34d399]">Leak Isolated (V-01 Shut)</span>
+              <button
+                onClick={() => {
+                  setValve01Aperture(40);
+                  isolateLineB(false);
+                }}
+                className="ml-2 text-[10px] text-gray-300 hover:text-white bg-[#133827] px-2 py-0.5 rounded cursor-pointer hover:bg-[#1a4a35]"
+              >
+                Re-open
+              </button>
             </div>
           </motion.div>
         )}
 
         </div>
       </div>
-      )}
 
       {/* ========================================================================= */}
       {/* 5. BOTTOM RIGHT FLOATING ZOOM & PAN CONTROLS                              */}

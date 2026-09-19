@@ -1,5 +1,4 @@
 <div align="center">
-  
   <h1>AquaRisk AI</h1>
   <p><b>Predictive Water Loss Timeline & Counterfactual Simulation Engine</b></p>
 </div>

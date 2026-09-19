@@ -20,7 +20,7 @@ export type VisualizerLayer =
   | 'pumps' 
   | 'valves';
 
-export type PlantId = 'plant-01' | 'plant-02';
+export type PlantId = 'plant-01' | 'plant-02' | 'plant-03' | 'plant-04';
 
 export interface PlantInfo {
   id: PlantId;
