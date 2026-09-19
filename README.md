@@ -113,9 +113,10 @@ Because we migrated to a fully native Windows stack, setup is incredibly simple:
 
 ## 🏆 Team Details
 
-**Team Name:** AquaRisk AI  
+**Team Name:** BYTE CRAFT 
 **Institution Name:** V.S.B Engineering College  
 **Problem Statement:** SU-03 — Industrial Water Network Leak & Loss Detection  
+**Project Name:** AQUARISK AI
 
 **Team Members:**
 - VISWA AG - Team Lead
