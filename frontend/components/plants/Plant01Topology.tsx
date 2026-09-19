@@ -415,11 +415,6 @@ export const Plant01Topology: React.FC<Plant01TopologyProps> = ({
             {/* Pulsing acoustic radar waves */}
             <circle cx="585" cy="340" r="16" fill="none" stroke="#FF5B67" strokeWidth="1.5" className="ultrasonic-wave" />
             <circle cx="585" cy="340" r="28" fill="none" stroke="#FF5B67" strokeWidth="1" className="ultrasonic-wave" style={{ animationDelay: '0.5s' }} />
-            
-            {/* Leak spray mist dots */}
-            <circle cx="595" cy="326" r="2" fill="#FF5B67" />
-            <circle cx="602" cy="320" r="1.5" fill="#28d7ff" />
-            <circle cx="598" cy="314" r="1" fill="#FFFFFF" />
           </>
         )}
 

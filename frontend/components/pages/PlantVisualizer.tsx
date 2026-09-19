@@ -557,7 +557,8 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
       {/* ========================================================================= */}
       {/* 2. LEFT FLOATING CONTROLS & MODE SELECTOR                                */}
       {/* ========================================================================= */}
-      <div className="absolute top-24 left-6 z-30 flex flex-col space-y-2.5 pointer-events-auto w-48">
+      {currentPlantId === 'plant-01' && (
+        <div className="absolute top-24 left-6 z-30 flex flex-col space-y-2.5 pointer-events-auto w-48">
         
         {/* Plant Selector Dropdown Card */}
         <div className="relative">
@@ -1012,89 +1013,97 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
           )}
         </AnimatePresence>
 
-      </div>
-
-      {/* ========================================================================= */}
-      {/* 3. BOTTOM LEFT "LIVE ALERTS" FLOATING CARD (MINIMIZED COMPACT FOOTPRINT)   */}
-      {/* ========================================================================= */}
-      {isAlertsMinimized ? (
-        <div className="absolute bottom-4 left-4 z-30 pointer-events-auto">
-          <button
-            onClick={() => setIsAlertsMinimized(false)}
-            className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-[#0b1622]/90 hover:bg-[#122332] backdrop-blur-md border border-[#1a3348] shadow-lg text-white transition-all cursor-pointer group"
-            title="Expand Live Alerts"
-            aria-label="Expand Live Alerts"
-          >
-            <div className="w-4 h-4 rounded-md bg-[#ff4d6d]/20 flex items-center justify-center text-[#ff4d6d]">
-              <Bell className="w-2.5 h-2.5" />
-            </div>
-            <span className="text-[10px] font-bold text-gray-200 group-hover:text-white font-['Outfit',sans-serif]">Live Alerts</span>
-            <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#ff4d6d]/20 text-[#ff4d6d] font-mono font-bold">
-              {alertsList.length}
-            </span>
-            <ChevronUp className="w-3 h-3 text-[#7893a6] group-hover:text-white ml-0.5" />
-          </button>
         </div>
-      ) : (
-        <div className="absolute bottom-4 left-4 z-30 pointer-events-auto w-[280px] sm:w-[310px] max-w-[calc(100vw-2rem)]">
-          <div className="p-2.5 rounded-2xl bg-[#0b1622]/95 backdrop-blur-md border border-[#1a3348] shadow-xl">
-            {/* Header */}
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#182e42]/80">
-              <div className="flex items-center space-x-1.5">
-                <div className="w-5 h-5 rounded-md bg-[#ff4d6d]/20 flex items-center justify-center text-[#ff4d6d]">
-                  <Bell className="w-3 h-3" />
-                </div>
-                <span className="text-[11px] font-bold text-white tracking-wide font-['Outfit',sans-serif]">Live Alerts</span>
-                <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#ff4d6d]/15 text-[#ff4d6d] font-mono font-bold">
-                  {alertsList.length}
-                </span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <button 
-                  onClick={() => onNavigate('incidents')}
-                  className="text-[10px] font-semibold text-[#8ca4b5] hover:text-[#ff4d6d] flex items-center space-x-0.5 transition-colors cursor-pointer px-1 py-0.5"
-                >
-                  <span>View All</span>
-                  <ArrowRight className="w-2.5 h-2.5" />
-                </button>
-                <button
-                  onClick={() => setIsAlertsMinimized(true)}
-                  className="p-1 rounded-md text-[#7893a6] hover:text-white hover:bg-[#142839] transition-colors cursor-pointer"
-                  title="Minimize Live Alerts"
-                  aria-label="Minimize Live Alerts"
-                >
-                  <Minus className="w-3 h-3" />
-                </button>
-              </div>
-            </div>
+      )}
 
-            {/* Alert List Rows */}
-            <div className="pt-1.5 space-y-1">
-              {alertsList.map((alert, idx) => (
-                <div 
-                  key={idx}
-                  onClick={() => onNavigate('incidents')}
-                  className="flex items-center justify-between text-[10px] py-1 hover:bg-[#122332]/60 px-1.5 rounded-lg transition-colors cursor-pointer gap-1.5"
-                >
-                  <div className="flex items-center space-x-1.5 min-w-0 flex-1">
-                    <span className="text-[9px] font-mono text-[#7691a3] shrink-0">{alert.time}</span>
-                    <span className="text-gray-200 truncate text-[10px]">{alert.message}</span>
+      {/* ========================================================================= */}
+      {/* 3. BOTTOM LEFT "LIVE ALERTS" FLOATING CARD (FOR PLANT 1)                  */}
+      {/* ========================================================================= */}
+      {currentPlantId === 'plant-01' && (
+        isAlertsMinimized ? (
+          <div className="absolute bottom-4 left-4 z-30 pointer-events-auto">
+            <button
+              onClick={() => setIsAlertsMinimized(false)}
+              className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-[#0b1622]/90 hover:bg-[#122332] backdrop-blur-md border border-[#1a3348] shadow-lg text-white transition-all cursor-pointer group"
+              title="Expand Live Alerts"
+              aria-label="Expand Live Alerts"
+            >
+              <div className="w-4 h-4 rounded-md bg-[#ff4d6d]/20 flex items-center justify-center text-[#ff4d6d]">
+                <Bell className="w-2.5 h-2.5" />
+              </div>
+              <span className="text-[10px] font-bold text-gray-200 group-hover:text-white font-['Outfit',sans-serif]">Live Alerts</span>
+              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#ff4d6d]/20 text-[#ff4d6d] font-mono font-bold">
+                {alertsList.length}
+              </span>
+              <ChevronUp className="w-3 h-3 text-[#7893a6] group-hover:text-white ml-0.5" />
+            </button>
+          </div>
+        ) : (
+          <div className="absolute bottom-4 left-4 z-30 pointer-events-auto w-[280px] sm:w-[310px] max-w-[calc(100vw-2rem)]">
+            <div className="p-2.5 rounded-2xl bg-[#0b1622]/95 backdrop-blur-md border border-[#1a3348] shadow-xl">
+              {/* Header */}
+              <div className="flex items-center justify-between pb-1.5 border-b border-[#182e42]/80">
+                <div className="flex items-center space-x-1.5">
+                  <div className="w-5 h-5 rounded-md bg-[#ff4d6d]/20 flex items-center justify-center text-[#ff4d6d]">
+                    <Bell className="w-3 h-3" />
                   </div>
-                  <span className={`px-1.5 py-0.2 rounded-md text-[9px] font-bold border shrink-0 ${alert.color}`}>
-                    {alert.severity}
+                  <span className="text-[11px] font-bold text-white tracking-wide font-['Outfit',sans-serif]">Live Alerts</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#ff4d6d]/15 text-[#ff4d6d] font-mono font-bold">
+                    {alertsList.length}
                   </span>
                 </div>
-              ))}
+                <div className="flex items-center space-x-1">
+                  <button 
+                    onClick={() => onNavigate('incidents')}
+                    className="text-[10px] font-semibold text-[#8ca4b5] hover:text-[#ff4d6d] flex items-center space-x-0.5 transition-colors cursor-pointer px-1 py-0.5"
+                  >
+                    <span>View All</span>
+                    <ArrowRight className="w-2.5 h-2.5" />
+                  </button>
+                  <button
+                    onClick={() => setIsAlertsMinimized(true)}
+                    className="p-1 rounded-md text-[#7893a6] hover:text-white hover:bg-[#142839] transition-colors cursor-pointer"
+                    title="Minimize Live Alerts"
+                    aria-label="Minimize Live Alerts"
+                  >
+                    <Minus className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Alert List Rows */}
+              <div className="pt-1.5 space-y-1">
+                {alertsList.map((alert, idx) => (
+                  <div 
+                    key={idx}
+                    onClick={() => onNavigate('incidents')}
+                    className="flex items-center justify-between text-[10px] py-1 hover:bg-[#122332]/60 px-1.5 rounded-lg transition-colors cursor-pointer gap-1.5"
+                  >
+                    <div className="flex items-center space-x-1.5 min-w-0 flex-1">
+                      <span className="text-[9px] font-mono text-[#7691a3] shrink-0">{alert.time}</span>
+                      <span className="text-gray-200 truncate text-[10px]">{alert.message}</span>
+                    </div>
+                    <span className={`px-1.5 py-0.2 rounded-md text-[9px] font-bold border shrink-0 ${alert.color}`}>
+                      {alert.severity}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )
       )}
 
       {/* ========================================================================= */}
       {/* 4. CENTER 3D INDUSTRIAL ISOMETRIC PLANT SCHEMATIC (INTERACTIVE SVG)       */}
       {/* ========================================================================= */}
       {currentPlantId === 'plant-02' ? (
-        <Plant02Visualizer onNavigateIncident={() => onNavigate('incident-center')} />
+        <Plant02Visualizer 
+          onNavigateIncident={() => onNavigate('incident-center')} 
+          currentPlantId={currentPlantId}
+          onPlantChange={setCurrentPlantId}
+          plants={plants}
+        />
       ) : (
         <div 
           ref={mapContainerRef}
@@ -1114,52 +1123,6 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
         <div className="absolute top-[28%] left-[16%] w-72 h-72 bg-[#00e5ff]/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-[48%] left-[50%] w-96 h-96 bg-[#ff4d6d]/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-[35%] right-[15%] w-80 h-80 bg-[#00e5ff]/10 rounded-full blur-3xl pointer-events-none" />
-
-        {/* Real-time SCADA System Status Indicator Overlay */}
-        <div className="absolute top-4 z-20 pointer-events-none max-w-xl mx-auto text-center px-4">
-          <AnimatePresence mode="wait">
-            {isPipelineAutoStopped ? (
-              <motion.div
-                key="cutoff"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-rose-950/85 backdrop-blur-md border border-rose-500/50 shadow-2xl text-rose-200 text-xs font-semibold pointer-events-auto"
-              >
-                <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" />
-                <span>SCADA AUTOMATIC SAFETY CUTOFF ENGAGED — Flow halted to prevent catastrophic pipe rupture</span>
-                <button
-                  onClick={() => resolveIncident()}
-                  className="ml-2 px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-[10px] cursor-pointer"
-                >
-                  Restore Flow
-                </button>
-              </motion.div>
-            ) : leakSimulationMode === 'warning_10' ? (
-              <motion.div
-                key="warning"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-amber-950/85 backdrop-blur-md border border-amber-500/50 shadow-2xl text-amber-200 text-xs font-semibold pointer-events-auto"
-              >
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
-                <span>10% SEEPAGE SIMULATION ACTIVE — Line operating under warning status, fluid flow continuing</span>
-              </motion.div>
-            ) : leakSimulationMode === 'resolved' ? (
-              <motion.div
-                key="nominal"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-emerald-950/85 backdrop-blur-md border border-emerald-500/50 shadow-2xl text-emerald-200 text-xs font-semibold pointer-events-auto"
-              >
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>ALL SENSORS NOMINAL — Normal fluid flow running at 380 L/min</span>
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
-        </div>
 
         {/* Zoomed & Panned Content Wrapper */}
         <div 
@@ -1512,13 +1475,6 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
                   <line x1="930" y1="658" x2="950" y2="525" stroke="#4dd0e1" strokeWidth="3" strokeLinecap="round" />
                 </g>
 
-                {/* 4. Bursting Water Droplets & Spray Particles */}
-                <circle cx="830" cy="500" r="6" fill="#ffffff" className="animate-ping" style={{ animationDuration: '0.8s' }} />
-                <circle cx="910" cy="465" r="7" fill="#00e5ff" className="animate-ping" style={{ animationDuration: '0.6s' }} />
-                <circle cx="985" cy="495" r="6" fill="#80d8ff" className="animate-ping" style={{ animationDuration: '0.9s' }} />
-                <circle cx="870" cy="485" r="4.5" fill="#ffffff" className="animate-bounce" />
-                <circle cx="945" cy="480" r="5" fill="#ffffff" className="animate-bounce" />
-
                 {/* 5. Flashing Warning Beacon Over Rupture */}
                 <g transform="translate(930, 600)">
                   <line x1="0" y1="55" x2="0" y2="12" stroke="#ff1744" strokeWidth="2.5" strokeDasharray="3 3" />
@@ -1778,32 +1734,32 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
           </motion.div>
         )}
 
-        {/* Repaired / Contained State HUD Pin */}
+        {/* Repaired / Contained State HUD Pin - Sized and positioned down to keep pipeline fully visible */}
         {!isLeakActive && (activeLayer === '3d' || activeLayer === 'pipelines' || activeLayer === 'sensor-map' || activeLayer === 'zones') && (
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="absolute top-[68%] left-[58%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
+            initial={{ scale: 0.85, opacity: 0, y: 10 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            className="absolute top-[82%] sm:top-[84%] left-[58%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
           >
-            <div className="flex flex-col p-3 rounded-2xl bg-[#061e14]/95 backdrop-blur-md border border-[#10b981] shadow-lg text-white space-y-2 min-w-[260px]">
-              <div className="flex items-center justify-between">
+            <div className="flex flex-col p-2.5 rounded-2xl bg-[#061e14]/95 backdrop-blur-md border border-[#10b981]/80 shadow-2xl text-white space-y-1.5 w-[270px] sm:w-[300px]">
+              <div className="flex items-center justify-between pb-1 border-b border-[#0f3824]">
                 <div className="flex items-center space-x-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
-                  <span className="text-xs font-bold text-[#34d399]">Pipeline Repaired & Sealed</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10b981] shrink-0" />
+                  <span className="text-[11px] font-bold text-[#34d399] font-['Outfit',sans-serif]">Pipeline Repaired & Sealed</span>
                 </div>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">
+                <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-bold">
                   Station 142m
                 </span>
               </div>
-              <p className="text-[10px] text-gray-300 font-mono">
+              <p className="text-[9px] text-[#93bba6] font-mono leading-tight">
                 Composite sleeve clamp installed • 4.4 bar nominal pressure restored • Zero bleed.
               </p>
-              <div className="flex items-center space-x-2 pt-1">
+              <div className="flex items-center space-x-1.5 pt-0.5">
                 <button
                   onClick={handleRetriggerDemoDefect}
-                  className="flex-1 py-1.5 px-2 rounded-xl bg-[#133827] hover:bg-[#1a4a35] text-emerald-200 text-[10px] font-bold flex items-center justify-center space-x-1.5 cursor-pointer border border-emerald-500/30"
+                  className="flex-1 py-1 px-2 rounded-xl bg-[#133827] hover:bg-[#1a4a35] text-emerald-200 text-[9px] font-bold flex items-center justify-center space-x-1 cursor-pointer border border-emerald-500/40 transition-colors"
                 >
-                  <RotateCcw className="w-3 h-3" />
+                  <RotateCcw className="w-2.5 h-2.5" />
                   <span>Re-trigger Defect Demo</span>
                 </button>
                 <button
@@ -1811,7 +1767,7 @@ export const PlantVisualizer: React.FC<PlantVisualizerProps> = ({
                     setValve01Aperture(40);
                     isolateLineB(false);
                   }}
-                  className="text-[10px] text-gray-300 hover:text-white bg-[#0e271b] px-2 py-1.5 rounded-xl cursor-pointer hover:bg-[#153a29]"
+                  className="text-[9px] text-[#8db5a0] hover:text-white bg-[#0e271b] px-2 py-1 rounded-xl cursor-pointer hover:bg-[#153a29] transition-colors"
                 >
                   Reset SCADA
                 </button>
