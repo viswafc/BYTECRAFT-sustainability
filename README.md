@@ -108,3 +108,16 @@ Because we migrated to a fully native Windows stack, setup is incredibly simple:
 - **Live SCADA Integration**: Direct ingestion from physical PLCs.
 - **Automated Actuation**: Upgrading the `DecisionEngine` from "Decision Support" to physical valve actuation.
 - **Municipal Scaling**: Implementing WebGL / Deck.gl rendering for massive 10,000+ node city topologies.
+
+---
+
+## 🏆 Team Details
+
+**Team Name:** AquaRisk AI  
+**Institution Name:** V.S.B Engineering College  
+**Problem Statement:** SU-03 — Industrial Water Network Leak & Loss Detection  
+
+**Team Members:**
+- VISWA AG - Team Lead
+- PRAVEENKUMAR S
+- SANJEEV S
